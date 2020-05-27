@@ -1,7 +1,11 @@
-root {
+.root {
   background: eee;
-
-  .cam {
+}
+.root .cam {
     padding: auto 0;
   }
-}
+
+.root img {
+    max-width: 300px;
+    max-height: 300px;
+  }

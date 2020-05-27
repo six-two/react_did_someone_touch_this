@@ -1,7 +1,7 @@
 import React from 'react';
 import Webcam from "react-webcam";
 import '../css/main.css';
-import ImageUpload from './ImageUpload';
+import UploadAndCompare from './UploadAndCompare';
 
 //TODO figure out if i should use restaints
 // maybe add an url parameter + chooser pattern so it can be safed
@@ -32,15 +32,15 @@ class App extends React.Component<Props, State> {
   }
 
   render() {
+    // {this.state.running ?
+    //   <Webcam className="cam" audio={false} videoConstraints={videoConstraints} />
+    //   : <span className="no-cam">Video is paused</span>}
+    // <div>
+    //   <button onClick={this.toggle_running}>Start/Stop</button>
+    // </div>
     return (
       <div className="root">
-        <ImageUpload />
-        {this.state.running ?
-          <Webcam className="cam" audio={false} videoConstraints={videoConstraints} />
-          : <span className="no-cam">Video is paused</span>}
-        <div>
-          <button onClick={this.toggle_running}>Start/Stop</button>
-        </div>
+        <UploadAndCompare />
       </div>
     );
   }
