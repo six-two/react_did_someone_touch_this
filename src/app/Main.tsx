@@ -19,7 +19,9 @@ export const VIDEO_CONSTRAINTS = {//TODO request best res
 }
 
 interface Props {
-  setAfterImage: (imageData: ImageData) => void;
+  setAfterImage: (imageData: ImageData) => void,
+  setBeforeImage: (imageData: ImageData) => void,
+  beforeImageData: ImageData,
 }
 
 interface State {
@@ -43,9 +45,17 @@ class MainView extends React.Component<Props, State> {
     // <div>
     //   <button onClick={this.toggle_running}>Start/Stop</button>
     // </div>
+    if (!this.props.beforeImageData) {
+      return <div className="root">
+        <ImageTaker setImage={this.props.setBeforeImage} />
+      </div>
+    }
     return (
       <div className="root">
-        <ImageTaker setImage={this.props.setAfterImage} />
+        <div className="cam-overlay">
+          <img src={this.props.beforeImageData} />
+          <ImageTaker setImage={this.props.setAfterImage} />
+        </div>
         <UploadAndCompare />
       </div>
     );
@@ -56,10 +66,12 @@ class MainView extends React.Component<Props, State> {
 const mapStateToProps = (state: ReduxState, ownProps: any) => {
   return {
     ...ownProps,
+    beforeImageData: state.beforeImage.data,
   };
 };
 const mapDispatchToProps = (dispatch: any) => {
   return {
+    setBeforeImage: (imageData: ImageData) => dispatch(setBeforeImage(imageData)),
     setAfterImage: (imageData: ImageData) => dispatch(setAfterImage(imageData)),
   };
 };

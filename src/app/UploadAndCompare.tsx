@@ -24,12 +24,13 @@ class UploadAndCompareView extends React.Component<Props, State> {
 
   render() {
     this.updateDiffImageIfNeeded();
+    // <h2>Before</h2>
+    // {renderImageIfExists(this.props.beforeImage.data)}
+    // <h2>After</h2>
+    // {renderImageIfExists(this.props.afterImage.data)}
     return (
       <div className="images">
-        <h2>Before</h2>
-        {renderImageIfExists(this.props.beforeImage.data)}
-        <h2>After</h2>
-        {renderImageIfExists(this.props.afterImage.data)}
+
         <h2>Difference</h2>
         {renderImageIfExists(this.state.diffImage)}
       </div>
