@@ -26,6 +26,7 @@ class ImageTaker extends React.Component<Props, State> {
     return (
       <div>
         <Webcam ref={this.webcamRef} className="cam" audio={false} videoConstraints={VIDEO_CONSTRAINTS} />
+        <br />
         <button onClick={this.onClick}>Take photo</button>
       </div>
     );

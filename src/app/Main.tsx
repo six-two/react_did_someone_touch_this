@@ -1,7 +1,7 @@
 import React from 'react';
 import Webcam from "react-webcam";
 import { connect } from 'react-redux';
-import '../css/main.css';
+import '../css/main.scss';
 import UploadAndCompare from './UploadAndCompare';
 import ImageTaker from './ImageTaker';
 import { State as ReduxState, ImageData } from './redux/store';
@@ -39,19 +39,24 @@ class MainView extends React.Component<Props, State> {
   }
 
   render() {
-    // {this.state.running ?
-    //   <Webcam className="cam" audio={false} videoConstraints={videoConstraints} />
-    //   : <span className="no-cam">Video is paused</span>}
-    // <div>
-    //   <button onClick={this.toggle_running}>Start/Stop</button>
-    // </div>
-    if (!this.props.beforeImageData) {
-      return <div className="root">
-        <ImageTaker setImage={this.props.setBeforeImage} />
-      </div>
-    }
     return (
       <div className="root">
+        <span className="err-msg">
+          This website is still in pre alpha state. It is likely instable, buggy, ugly and might get broken from time to time.
+        </span>
+        <div className="app-contents">
+          {this.renderContents()}
+        </div>
+      </div>
+    );
+  }
+
+  renderContents() {
+    if (!this.props.beforeImageData) {
+      return <ImageTaker setImage={this.props.setBeforeImage} />
+    }
+    return (
+      <div>
         <div className="cam-overlay">
           <img src={this.props.beforeImageData} />
           <ImageTaker setImage={this.props.setAfterImage} />
