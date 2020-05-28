@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface Props {
-  onImageUpload: (url: string) => void,
+  setImage: (imageDataUrl: string) => void,
 }
 
 interface State {
@@ -25,13 +25,13 @@ class ImageUrlUploader extends React.Component<Props, State> {
     const files = e.target.files;
     if (files && files[0]) {
       var fileReader = new FileReader();
-      fileReader.onload = this.changeState;
+      fileReader.onload = this.onFileUploaded;
       fileReader.readAsDataURL(files[0]);
     }
   }
 
-  changeState = (event: any) => {
-    this.props.onImageUpload(event.target.result);
+  onFileUploaded = (event: any) => {
+    this.props.setImage(event.target.result);
   }
 }
 

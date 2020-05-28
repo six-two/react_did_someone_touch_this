@@ -1,54 +1,53 @@
 import React from 'react';
 import Webcam from "react-webcam";
-import '../css/main.css';
-import ImageUpload from './ImageUpload';
+import { connect } from 'react-redux';
 import resemble from 'resemblejs';
+import ImageUpload from './ImageUpload';
+import { State as ReduxState, ImageState } from './redux/store';
+
 
 interface Props {
+  beforeImage: ImageState,
+  afterImage: ImageState,
 }
 
 interface State {
-  beforeImage?: string,
-  afterImage?: string,
+  imageVersion: number,
   diffImage?: string,
 }
 
 class UploadAndCompareView extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = {};
+    this.state = { imageVersion: -1 };
   }
 
   render() {
+    this.updateDiffImageIfNeeded();
     return (
       <div className="images">
         <h2>Before</h2>
-        <ImageUpload onImageUpload={this.setBeforeImage} />
-        {this.state.beforeImage ? <img src={this.state.beforeImage} /> : null}
+        {renderImageIfExists(this.props.beforeImage.data)}
         <h2>After</h2>
-        <ImageUpload onImageUpload={this.setAfterImage} />
-        {this.state.afterImage ? <img src={this.state.afterImage} /> : null}
+        {renderImageIfExists(this.props.afterImage.data)}
         <h2>Difference</h2>
-        {this.state.diffImage ? <img src={this.state.diffImage} /> : null}
+        {renderImageIfExists(this.state.diffImage)}
       </div>
     );
   }
 
-  setBeforeImage = (imageUrl: string) => {
-    this.updateImage({ beforeImage: imageUrl });
-  }
-
-  setAfterImage = (imageUrl: string) => {
-    this.updateImage({ afterImage: imageUrl });
-  }
-
-  updateImage(change: any) {
-    this.setState(change);
-    if (this.state.beforeImage && this.state.afterImage) {
-      let resembleControl: any = resemble(this.state.beforeImage)
-        .compareTo(this.state.afterImage)
-        .onComplete(this.onComplete);
-      resembleControl.ignoreColors();
+  updateDiffImageIfNeeded() {
+    const currentVersion = this.props.afterImage.updateCount + this.props.beforeImage.updateCount;
+    if (currentVersion !== this.state.imageVersion) {
+      this.setState({ imageVersion: currentVersion });
+      const after = this.props.afterImage.data;
+      const before = this.props.beforeImage.data;
+      if (after && before) {
+        let resembleControl: any = resemble(before)
+          .compareTo(after)
+          .onComplete(this.onComplete);
+        resembleControl.ignoreColors();
+      }
     }
   }
 
@@ -57,4 +56,22 @@ class UploadAndCompareView extends React.Component<Props, State> {
   }
 }
 
-export default UploadAndCompareView;
+function renderImageIfExists(imageData: string | null | undefined) {
+  if (imageData) {
+    return <img src={imageData} />
+  }
+}
+
+const mapStateToProps = (state: ReduxState, ownProps: any) => {
+  return {
+    ...ownProps,
+    beforeImage: state.beforeImage,
+    afterImage: state.afterImage,
+  };
+};
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(UploadAndCompareView);
