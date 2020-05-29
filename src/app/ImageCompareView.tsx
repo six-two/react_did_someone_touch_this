@@ -1,8 +1,6 @@
 import React from 'react';
-import Webcam from "react-webcam";
 import { connect } from 'react-redux';
 import { compare } from 'resemblejs';
-import ImageUpload from './ImageUpload';
 import { State as ReduxState, ImageState, ImageData } from './redux/store';
 import { setDiffImage } from './redux/actions';
 
@@ -28,10 +26,7 @@ class ImageCompareView extends React.Component<Props, State> {
 
   render() {
     this.updateDiffImageIfNeeded();
-    // <h2>Before</h2>
-    // {renderImageIfExists(this.props.beforeImage.data)}
-    // <h2>After</h2>
-    // {renderImageIfExists(this.props.afterImage.data)}
+
     return (
       <div className="images">
 
@@ -76,7 +71,7 @@ class ImageCompareView extends React.Component<Props, State> {
 
 function renderImageIfExists(imageData: string | null | undefined) {
   if (imageData) {
-    return <img src={imageData} />
+    return <img src={imageData} alt="Differences between the before and after pictures" />
   }
 }
 

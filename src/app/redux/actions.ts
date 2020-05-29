@@ -1,4 +1,4 @@
-import { State, ImageData } from './store';
+import { ImageData } from './store';
 
 // action types
 export const SET_IMAGE = "SET_IMAGE";

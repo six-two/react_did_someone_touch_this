@@ -1,5 +1,4 @@
 import React from 'react';
-import Webcam from "react-webcam";
 import { connect } from 'react-redux';
 import '../css/main.scss';
 import ImageCompareView from './ImageCompareView';
@@ -29,10 +28,6 @@ interface State {
 }
 
 class MainView extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-  }
-
   render() {
     return (
       <div>

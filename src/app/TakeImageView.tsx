@@ -1,6 +1,6 @@
 import React from 'react';
 import Webcam from "react-webcam";
-import { State as ReduxState, ImageData } from './redux/store';
+import { ImageData } from './redux/store';
 import { VIDEO_CONSTRAINTS } from './Main';
 
 
@@ -22,7 +22,7 @@ class TakeImageView extends React.Component<Props> {
     const className = "take-image-div" + (bgImg ? " transparent-cam" : "");
     return (
       <div className={className}>
-        {bgImg ? <img src={bgImg} /> : null}
+        {bgImg ? <img src={bgImg} alt="" /> : null}
         <Webcam ref={this.webcamRef} className="cam" onClick={this.onClick}
           audio={false} videoConstraints={VIDEO_CONSTRAINTS} />
       </div>
