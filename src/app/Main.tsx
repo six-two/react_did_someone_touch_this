@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import '../css/main.scss';
 import ImageCompareView from './ImageCompareView';
 import TakeImageView from './TakeImageView';
+import InstructionView from './steps/Instructions';
 import { State as ReduxState, ImageData } from './redux/store';
 import { setAfterImage, setBeforeImage } from './redux/actions';
 
@@ -47,7 +48,10 @@ class MainView extends React.Component<Props, State> {
 
   renderContents() {
     if (!this.props.beforeImageData) {
-      return <TakeImageView onPhoto={this.props.setBeforeImage} />
+      return <div>
+        <InstructionView />
+        <TakeImageView onPhoto={this.props.setBeforeImage} />
+      </div>
     }
     if (!this.props.afterImageData) {
       return <TakeImageView onPhoto={this.props.setAfterImage} backgroundImage={this.props.beforeImageData} />
