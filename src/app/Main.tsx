@@ -3,8 +3,7 @@ import Webcam from "react-webcam";
 import { connect } from 'react-redux';
 import '../css/main.scss';
 import ImageCompareView from './ImageCompareView';
-import AfterImageTaker from './TakeAfterImage';
-import BeforeImageTaker from './TakeBeforeImage';
+import TakeImageView from './TakeImageView';
 import { State as ReduxState, ImageData } from './redux/store';
 import { setAfterImage, setBeforeImage } from './redux/actions';
 
@@ -49,10 +48,10 @@ class MainView extends React.Component<Props, State> {
 
   renderContents() {
     if (!this.props.beforeImageData) {
-      return <BeforeImageTaker />
+      return <TakeImageView onPhoto={this.props.setBeforeImage} />
     }
     if (!this.props.afterImageData) {
-      return <AfterImageTaker />
+      return <TakeImageView onPhoto={this.props.setAfterImage} backgroundImage={this.props.beforeImageData} />
     }
     return <ImageCompareView />
   }

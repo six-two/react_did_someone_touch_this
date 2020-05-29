@@ -3,49 +3,52 @@ $camWidth: 700px;
 #root {
   background: eee;
 
-.app-contents {
-  margin: 0px auto;
+  .app-contents {
+    margin: 0px auto;
 
-}
-
-.cam {
-  width: $camWidth;
-}
-
-.err-msg {
-  border-radius: 5px;
-  background-color: #ffaaaa;
-  border: 2px solid #f00;
-  padding: 3px;
-  margin: 20px;
-}
-
-.app-contents {
-  margin-top: 30px;
-}
-//
-// .root img {
-//     max-width: 300px;
-//     max-height: 300px;
-//   }
-
-.cam-overlay {
-    position: relative;
-    width: $camWidth;
-    height: 500;
-   img {
-    // max-width: $camWidth;
-    // max-height: 100%;
-    width: $camWidth;
-    height: 100%;
   }
+
   .cam {
-    position: absolute;
-    top: 0;
-    right: 0;
-    // height: 100%;
     width: $camWidth;
-    opacity: 0.5;
   }
-}
+
+  .err-msg {
+    border-radius: 5px;
+    background-color: #ffaaaa;
+    border: 2px solid #f00;
+    padding: 3px;
+    margin: 20px;
+  }
+
+  .app-contents {
+    margin-top: 30px;
+  }
+  //
+  // .root img {
+  //     max-width: 300px;
+  //     max-height: 300px;
+  //   }
+
+  .take-image-div {
+      position: relative;
+      width: $camWidth;
+      height: 500;
+     img {
+      // max-width: $camWidth;
+      // max-height: 100%;
+      width: $camWidth;
+      height: 100%;
+    }
+    .cam {
+      position: absolute;
+      top: 0;
+      right: 0;
+      // height: 100%;
+      width: $camWidth;
+    }
+  }
+
+  .transparent-cam .cam {
+    opacity: 0.6;
+  }
 }
