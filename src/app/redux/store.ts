@@ -3,6 +3,16 @@ import reducer from './reducer';
 
 export type ImageData = string;
 
+export const STEPS = {
+  FIRST: 0,
+  INSTRUCTIONS: 0,
+  SETTINGS: 1,
+  BEFORE_PHOTO: 2,
+  AFTER_PHOTO: 3,
+  COMPARISON: 4,
+  LAST: 4,
+};
+
 export interface State {
   beforeImage: ImageState,
   afterImage: ImageState,

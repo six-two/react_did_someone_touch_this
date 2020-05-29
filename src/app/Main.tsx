@@ -7,11 +7,15 @@ import { State as ReduxState, ImageData } from './redux/store';
 import { setAfterImage, setBeforeImage } from './redux/actions';
 
 //TODO figure out if i should use restaints
+// add instructions
+// add steps and switching between them
+// add settings
+// add manual comarison: fadein/out, slide left/right, side by side
+// add settings persistence: local storage, url?
+// add downloading of photos
 // maybe add an url parameter + chooser pattern so it can be safed
-// install sass
+// [opt] find out how to use key events?
 
-//How to store image to compare? local storage, down- and upload
-// -> up/down: +better_quality +easier_to_test
 
 export const VIDEO_CONSTRAINTS = {//TODO request best res
   facingMode: { ideal: "environment" }
