@@ -33,6 +33,14 @@ function reducer(state: State | undefined, action: Actions.Action): State {
               updateCount: state.beforeImage.updateCount + 1,
             },
           }
+        case Actions.DIFF_IMAGE:
+          return {
+            ...state,
+            diffImage: {
+              data: payload.imageData,
+              updateCount: state.diffImage.updateCount + 1,
+            },
+          }
         default:
           console.warn(`Unknown image name: "${payload.imageName}"`);
       }

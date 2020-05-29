@@ -2,8 +2,9 @@ import React from 'react';
 import Webcam from "react-webcam";
 import { connect } from 'react-redux';
 import '../css/main.scss';
-import UploadAndCompare from './UploadAndCompare';
-import ImageTaker from './ImageTaker';
+import ImageCompareView from './ImageCompareView';
+import AfterImageTaker from './TakeAfterImage';
+import BeforeImageTaker from './TakeBeforeImage';
 import { State as ReduxState, ImageData } from './redux/store';
 import { setAfterImage, setBeforeImage } from './redux/actions';
 
@@ -22,25 +23,20 @@ interface Props {
   setAfterImage: (imageData: ImageData) => void,
   setBeforeImage: (imageData: ImageData) => void,
   beforeImageData: ImageData,
+  afterImageData: ImageData,
 }
 
 interface State {
-  running: boolean,
 }
 
 class MainView extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = { running: false }
-  }
-
-  toggle_running = () => {
-    this.setState({ running: !this.state.running });
   }
 
   render() {
     return (
-      <div className="root">
+      <div>
         <span className="err-msg">
           This website is still in pre alpha state. It is likely instable, buggy, ugly and might get broken from time to time.
         </span>
@@ -53,17 +49,12 @@ class MainView extends React.Component<Props, State> {
 
   renderContents() {
     if (!this.props.beforeImageData) {
-      return <ImageTaker setImage={this.props.setBeforeImage} />
+      return <BeforeImageTaker />
     }
-    return (
-      <div>
-        <div className="cam-overlay">
-          <img src={this.props.beforeImageData} />
-          <ImageTaker setImage={this.props.setAfterImage} />
-        </div>
-        <UploadAndCompare />
-      </div>
-    );
+    if (!this.props.afterImageData) {
+      return <AfterImageTaker />
+    }
+    return <ImageCompareView />
   }
 }
 
@@ -72,6 +63,7 @@ const mapStateToProps = (state: ReduxState, ownProps: any) => {
   return {
     ...ownProps,
     beforeImageData: state.beforeImage.data,
+    afterImageData: state.afterImage.data,
   };
 };
 const mapDispatchToProps = (dispatch: any) => {

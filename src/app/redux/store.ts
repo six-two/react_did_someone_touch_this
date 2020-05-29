@@ -6,6 +6,7 @@ export type ImageData = string;
 export interface State {
   beforeImage: ImageState,
   afterImage: ImageState,
+  diffImage: ImageState,
 }
 
 export interface ImageState {
@@ -14,15 +15,15 @@ export interface ImageState {
 }
 
 
+const DEFAULT_IMAGE_STATE = {
+  data: null,
+  updateCount: 0,
+};
+
 export const fallbackState: State = {
-  beforeImage: {
-    data: null,
-    updateCount: 0,
-  },
-  afterImage: {
-    data: null,
-    updateCount: 0,
-  },
+  beforeImage: DEFAULT_IMAGE_STATE,
+  afterImage: DEFAULT_IMAGE_STATE,
+  diffImage: DEFAULT_IMAGE_STATE,
 }
 
 let devTools = undefined;
