@@ -28,10 +28,8 @@ class ImageCompareView extends React.Component<Props, State> {
     this.updateDiffImageIfNeeded();
 
     return (
-      <div className="images">
-
-        <h2>Difference</h2>
-        {renderImageIfExists(this.props.diffImageData)}
+      <div className="diff-view">
+        <img src={this.props.diffImageData} alt="Differences between the before and after pictures" />
       </div>
     );
   }
@@ -78,7 +76,7 @@ function renderImageIfExists(imageData: string | null | undefined) {
 const mapStateToProps = (state: ReduxState, ownProps: any) => {
   return {
     ...ownProps,
-    beforeImage: state.images.before, 
+    beforeImage: state.images.before,
     afterImage: state.images.after,
     diffImageData: state.images.diff.data,
   };

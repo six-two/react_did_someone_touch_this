@@ -1,8 +1,10 @@
 $camWidth: 700px;
 
 .take-image-div {
+  display: block;
   position: relative;
   width: $camWidth;
+  margin: 0px auto;
 
   img {
     position: absolute;

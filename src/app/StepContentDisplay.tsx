@@ -20,10 +20,10 @@ interface Props {
 interface State {
 }
 
-class MainView extends React.Component<Props, State> {
+class StepContentView extends React.Component<Props, State> {
   render() {
     return (
-      <div>
+      <div className="step-content">
         {this.renderContents()}
       </div>
     );
@@ -59,7 +59,7 @@ class MainView extends React.Component<Props, State> {
   renderWithNextButton(component: any) {
     return (<div>
       {component}
-      <button onClick={this.props.completeStep}>
+      <button className="next-button" onClick={this.props.completeStep}>
         Next step
       </button>
     </div>);
@@ -84,4 +84,4 @@ const mapDispatchToProps = (dispatch: any) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainView);
+export default connect(mapStateToProps, mapDispatchToProps)(StepContentView);

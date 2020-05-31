@@ -20,9 +20,7 @@ class MainView extends React.Component {
         </div>
         <div className="app-contents">
           <StepDisplay />
-          <div className="step-content">
-            <StepContent />
-          </div>
+          <StepContent />
         </div>
       </div>
     );
