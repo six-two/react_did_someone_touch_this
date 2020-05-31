@@ -1,18 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import '../css/main.scss';
 import ImageCompareView from './ImageCompareView';
 import TakeImageView from './TakeImageView';
 import InstructionView from './steps/Instructions';
 import { State as ReduxState, ImageData } from './redux/store';
 import { setAfterImage, setBeforeImage, completedCurrentStep } from './redux/actions';
-import StepDisplay from './StepDisplay';
 import * as Steps from './steps/Steps';
 
-
-export const VIDEO_CONSTRAINTS = {//TODO request best res
-  facingMode: { ideal: "environment" }
-}
 
 interface Props {
   setAfterImage: (imageData: ImageData) => void,

@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { compare } from 'resemblejs';
-import { State as ReduxState, ImageState, ImageData } from './redux/store';
-import { goToStep, completedCurrentStep } from './redux/actions';
+import { State as ReduxState } from './redux/store';
+import { goToStep } from './redux/actions';
 import { STEPS, StepData } from './steps/Steps';
 
 
@@ -16,11 +15,9 @@ interface Props {
 class StepDisplay extends React.Component<Props> {
   render() {
     return (
-      <div className="steps">
-        <ul>
-          {STEPS.map(this.renderStep)}
-        </ul>
-      </div>
+      <ul className="step-list">
+        {STEPS.map(this.renderStep)}
+      </ul>
     );
   }
 

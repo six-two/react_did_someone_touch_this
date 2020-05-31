@@ -1,0 +1,28 @@
+.step-list {
+  display: flex;
+  width: 100%;
+  padding: 0px;
+
+  li {
+    flex: 1;
+    text-align: center;
+    display: inline-block;
+    padding: 5px 5px;
+    margin: 0px 15px;
+    border: 2px solid black;
+    border-radius: 10px;
+  }
+
+  .selected {
+    color: blue;
+  }
+
+  .selectable {
+    cursor: pointer;
+  }
+
+  .disabled {
+    color: gray;
+    cursor: not-allowed;
+  }
+}

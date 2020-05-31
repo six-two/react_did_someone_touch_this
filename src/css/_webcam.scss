@@ -1,0 +1,18 @@
+$camWidth: 700px;
+
+.take-image-div {
+  position: relative;
+  width: $camWidth;
+
+  img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: $camWidth;
+    opacity: 0.4;
+  }
+
+  .cam {
+    width: $camWidth;
+  }
+}
