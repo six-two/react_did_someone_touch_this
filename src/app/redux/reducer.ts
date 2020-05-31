@@ -1,5 +1,6 @@
 import * as Actions from './actions';
-import { State, fallbackState } from './store';
+import { State, ImageState, ImageData, fallbackState } from './store';
+import { getLastAccessibleStepIndex, assertStepInBounds } from '../steps/Steps';
 
 
 function reducer(state: State | undefined, action: Actions.Action): State {
@@ -17,43 +18,80 @@ function reducer(state: State | undefined, action: Actions.Action): State {
     case Actions.SET_IMAGE: {
       return handle_setImage(state, action);
     }
+    case Actions.COMPLETE_STEP: {
+      return handle_completeStep(state);
+    }
+    case Actions.GO_TO_STEP: {
+      return handle_goToStep(state, action);
+    }
     default:
       console.warn(`Unknown action type: "${action.type}"`);
       return state;
   }
 }
 
+function handle_completeStep(state: State): State {
+  let next = state.steps.current + 1;
+  if (assertStepInBounds(next)) {
+    let completed = getLastAccessibleStepIndex(next);
+    // handle cases where the user went back
+    completed = Math.max(state.steps.completed, completed);
+    return {
+      ...state,
+      steps: {
+        current: next,
+        completed: completed,
+      },
+    }
+  } else {
+    return state;
+  }
+}
+
+function handle_goToStep(state: State, action: Actions.Action): State {
+  let step = (action as Actions.GoToStepAction).payload;
+  if (assertStepInBounds(step) && step <= state.steps.completed) {
+    return {
+      ...state,
+      steps: {
+        ...state.steps,
+        current: step,
+      },
+    };
+  } else {
+    console.warn(`Can not switch to step ${step}. State: ${state.steps}`);
+    return state;
+  }
+}
+
 function handle_setImage(state: State, action: Actions.Action): State {
   let payload = (action as Actions.SetImageAction).payload;
+  let imageStateCopy = { ...state.images };
   switch (payload.imageName) {
     case Actions.AFTER_IMAGE:
-      return {
-        ...state,
-        afterImage: {
-          data: payload.imageData,
-          updateCount: state.afterImage.updateCount + 1,
-        },
-      }
+      imageStateCopy.after = modifyImageState(imageStateCopy.after, payload.imageData);
+      break;
     case Actions.BEFORE_IMAGE:
-      return {
-        ...state,
-        beforeImage: {
-          data: payload.imageData,
-          updateCount: state.beforeImage.updateCount + 1,
-        },
-      }
+      imageStateCopy.before = modifyImageState(imageStateCopy.before, payload.imageData);
+      break;
     case Actions.DIFF_IMAGE:
-      return {
-        ...state,
-        diffImage: {
-          data: payload.imageData,
-          updateCount: state.diffImage.updateCount + 1,
-        },
-      }
+      imageStateCopy.diff = modifyImageState(imageStateCopy.diff, payload.imageData);
+      break;
     default:
       console.warn(`Unknown image name: "${payload.imageName}"`);
       return state;
   }
+  return {
+    ...state,
+    images: imageStateCopy,
+  }
+}
+
+function modifyImageState(oldSubState: ImageState, newData: ImageData) {
+  return {
+    data: newData,
+    updateCount: oldSubState.updateCount + 1,
+  };
 }
 
 export default reducer

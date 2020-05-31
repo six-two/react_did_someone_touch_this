@@ -1,22 +1,19 @@
 import { createStore } from 'redux';
 import reducer from './reducer';
+import { getLastAccessibleStepIndex } from '../steps/Steps';
 
 export type ImageData = string;
 
-export const STEPS = {
-  FIRST: 0,
-  INSTRUCTIONS: 0,
-  SETTINGS: 1,
-  BEFORE_PHOTO: 2,
-  AFTER_PHOTO: 3,
-  COMPARISON: 4,
-  LAST: 4,
-};
-
 export interface State {
-  beforeImage: ImageState,
-  afterImage: ImageState,
-  diffImage: ImageState,
+  images: {
+    before: ImageState,
+    after: ImageState,
+    diff: ImageState,
+  },
+  steps: {
+    current: number,
+    completed: number,
+  },
 }
 
 export interface ImageState {
@@ -31,9 +28,15 @@ const DEFAULT_IMAGE_STATE = {
 };
 
 export const fallbackState: State = {
-  beforeImage: DEFAULT_IMAGE_STATE,
-  afterImage: DEFAULT_IMAGE_STATE,
-  diffImage: DEFAULT_IMAGE_STATE,
+  images: {
+    before: DEFAULT_IMAGE_STATE,
+    after: DEFAULT_IMAGE_STATE,
+    diff: DEFAULT_IMAGE_STATE,
+  },
+  steps: {
+    current: 0, 
+    completed: getLastAccessibleStepIndex(0),
+  },
 }
 
 let devTools = undefined;

@@ -6,10 +6,10 @@ import TakeImageView from './TakeImageView';
 import InstructionView from './steps/Instructions';
 import { State as ReduxState, ImageData } from './redux/store';
 import { setAfterImage, setBeforeImage } from './redux/actions';
+import StepDisplay from './StepDisplay';
+import StepContent from './StepContentDisplay';
 
 //TODO figure out if i should use restaints
-// add instructions
-// add steps and switching between them
 // add settings
 // add manual comarison: fadein/out, slide left/right, side by side
 // add settings persistence: local storage, url?
@@ -40,7 +40,8 @@ class MainView extends React.Component<Props, State> {
           This website is still in pre alpha state. It is likely instable, buggy, ugly and might get broken from time to time.
         </span>
         <div className="app-contents">
-          {this.renderContents()}
+          <StepDisplay />
+          <StepContent />
         </div>
       </div>
     );
@@ -64,8 +65,8 @@ class MainView extends React.Component<Props, State> {
 const mapStateToProps = (state: ReduxState, ownProps: any) => {
   return {
     ...ownProps,
-    beforeImageData: state.beforeImage.data,
-    afterImageData: state.afterImage.data,
+    beforeImageData: state.images.before.data,
+    afterImageData: state.images.after.data,
   };
 };
 const mapDispatchToProps = (dispatch: any) => {

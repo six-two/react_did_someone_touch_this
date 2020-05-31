@@ -51,4 +51,13 @@ $camWidth: 700px;
   .transparent-cam .cam {
     opacity: 0.6;
   }
+
+  .steps {
+    .selected {
+      color: blue;
+    }
+    .disabled {
+      color: gray;
+    }
+  }
 }

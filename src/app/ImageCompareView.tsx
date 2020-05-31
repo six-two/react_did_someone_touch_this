@@ -78,9 +78,9 @@ function renderImageIfExists(imageData: string | null | undefined) {
 const mapStateToProps = (state: ReduxState, ownProps: any) => {
   return {
     ...ownProps,
-    beforeImage: state.beforeImage,
-    afterImage: state.afterImage,
-    diffImageData: state.diffImage.data,
+    beforeImage: state.images.before, 
+    afterImage: state.images.after,
+    diffImageData: state.images.diff.data,
   };
 };
 const mapDispatchToProps = (dispatch: any) => {

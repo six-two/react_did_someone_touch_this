@@ -1,0 +1,93 @@
+import React from 'react';
+import { connect } from 'react-redux';
+import '../css/main.scss';
+import ImageCompareView from './ImageCompareView';
+import TakeImageView from './TakeImageView';
+import InstructionView from './steps/Instructions';
+import { State as ReduxState, ImageData } from './redux/store';
+import { setAfterImage, setBeforeImage, completedCurrentStep } from './redux/actions';
+import StepDisplay from './StepDisplay';
+import * as Steps from './steps/Steps';
+
+
+export const VIDEO_CONSTRAINTS = {//TODO request best res
+  facingMode: { ideal: "environment" }
+}
+
+interface Props {
+  setAfterImage: (imageData: ImageData) => void,
+  setBeforeImage: (imageData: ImageData) => void,
+  completeStep: () => void,
+  beforeImageData: ImageData,
+  afterImageData: ImageData,
+  step: number,
+}
+
+interface State {
+}
+
+class MainView extends React.Component<Props, State> {
+  render() {
+    return (
+      <div>
+        {this.renderContents()}
+      </div>
+    );
+  }
+
+  renderContents() {
+    switch (this.props.step) {
+      case Steps.STEP_INTRO:
+        return this.renderWithNextButton(<InstructionView />);
+      case Steps.STEP_SETTINGS:
+        return this.renderWithNextButton(<span>TODO settings</span>);
+      case Steps.STEP_BEFORE_PHOTO:
+        return <TakeImageView onPhoto={this.takeBeforeImage} />
+      case Steps.STEP_AFTER_PHOTO:
+        return <TakeImageView onPhoto={this.takeAfterImage} backgroundImage={this.props.beforeImageData} />
+      case Steps.STEP_COMPARE:
+        return <ImageCompareView />
+      default:
+        return <span>Error: Unknown step</span>
+    }
+  }
+
+  takeBeforeImage = (image: ImageData) => {
+    this.props.setBeforeImage(image);
+    this.props.completeStep();
+  }
+
+  takeAfterImage = (image: ImageData) => {
+    this.props.setAfterImage(image);
+    this.props.completeStep();
+  }
+
+  renderWithNextButton(component: any) {
+    return (<div>
+      {component}
+      <button onClick={this.props.completeStep}>
+        Next step
+      </button>
+    </div>);
+  }
+}
+
+
+const mapStateToProps = (state: ReduxState, ownProps: any) => {
+  return {
+    ...ownProps,
+    beforeImageData: state.images.before.data,
+    afterImageData: state.images.after.data,
+    step: state.steps.current,
+  };
+};
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    setBeforeImage: (imageData: ImageData) => dispatch(setBeforeImage(imageData)),
+    setAfterImage: (imageData: ImageData) => dispatch(setAfterImage(imageData)),
+    completeStep: () => dispatch(completedCurrentStep()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainView);
