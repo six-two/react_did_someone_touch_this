@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { State as ReduxState } from './redux/store';
 import { setImageSource } from './redux/actions';
-import { STEPS, StepData } from './steps/Steps';
 import { SOURCE_WEBCAM, SOURCE_FILE } from './redux/constants';
 import OptionView from './OptionView';
 

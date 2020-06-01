@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { State as ReduxState, ImageData } from './redux/store';
-import { setImageSource } from './redux/actions';
-import { STEPS, StepData } from './steps/Steps';
 import { SOURCE_WEBCAM, SOURCE_FILE } from './redux/constants';
 import TakeImageView from './TakeImageView';
 import ImageUpload from './ImageUpload';
@@ -26,9 +24,16 @@ class GetImageView extends React.Component<Props> {
   renderContents() {
     switch (this.props.imageSource) {
       case SOURCE_WEBCAM:
-        return <TakeImageView onPhoto={this.props.onImage} backgroundImage={this.props.backgroundImage} />;
+        return <div>
+          <h2>Take a photo</h2>
+          Allow camera access and touch/click the image below.
+          <TakeImageView onPhoto={this.props.onImage} backgroundImage={this.props.backgroundImage} />;
+        </div>
       case SOURCE_FILE:
-        return <ImageUpload setImage={this.props.onImage} />
+        return <div>
+          <h2>Upload an image</h2>
+          <ImageUpload setImage={this.props.onImage} />
+        </div>
       default:
         throw new Error(`Unknown image source: "${this.props.imageSource}"`)
     };

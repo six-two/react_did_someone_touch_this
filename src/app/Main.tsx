@@ -6,7 +6,6 @@ import '../css/main.scss';
 //TODO figure out if i should use restaints
 // add manual comarison: fadein/out, slide left/right, side by side
 // add settings persistence: local storage, url?
-// add downloading of photos
 // maybe add an url parameter + chooser pattern so it can be safed
 // [opt] find out how to use key events?
 

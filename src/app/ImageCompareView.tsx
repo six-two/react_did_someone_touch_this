@@ -27,8 +27,14 @@ class ImageCompareView extends React.Component<Props, State> {
   render() {
     this.updateDiffImageIfNeeded();
 
+    if (!this.props.diffImageData){
+      return <span className="err-msg">Internal error: can not compare images</span>
+    }
+
     return (
       <div className="diff-view">
+        <h2>Comparison</h2>
+        All changes that were detected are marked in pink.
         <img src={this.props.diffImageData} alt="Differences between the before and after pictures" />
         <a className="download-button" href={this.props.diffImageData} download="did_someone_touch_this.png" >
           Download image
@@ -67,12 +73,6 @@ class ImageCompareView extends React.Component<Props, State> {
       const diffImageData: string = data.getImageDataUrl();
       this.props.setDiffImage(diffImageData);
     }
-  }
-}
-
-function renderImageIfExists(imageData: string | null | undefined) {
-  if (imageData) {
-    return <img src={imageData} alt="Differences between the before and after pictures" />
   }
 }
 

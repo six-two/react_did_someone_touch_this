@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ImageCompareView from './ImageCompareView';
-import TakeImageView from './TakeImageView';
 import InstructionView from './steps/Instructions';
 import SettingsView from './SettingsView';
 import GetImageView from './GetImage';

@@ -15,10 +15,7 @@ class ImageUrlUploader extends React.Component<Props, State> {
 
   render() {
     return (
-      <div className="image-upload">
-        <div>Upload your image</div>
-        <input type='file' onChange={this.onChange} />
-      </div>
+      <input className="image-upload" type='file' onChange={this.onChange} />
     );
   }
 
@@ -29,6 +26,7 @@ class ImageUrlUploader extends React.Component<Props, State> {
       fileReader.onload = this.onFileUploaded;
       fileReader.readAsDataURL(files[0]);
     }
+    e.target.value = null;//clear the input; SEE https://stackoverflow.com/questions/42192346/how-to-reset-reactjs-file-input
   }
 
   onFileUploaded = (event: any) => {
