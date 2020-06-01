@@ -1,4 +1,5 @@
 import * as Actions from './actions';
+import { AFTER_IMAGE, BEFORE_IMAGE, DIFF_IMAGE } from './constants';
 import { State, ImageState, ImageData, fallbackState } from './store';
 import { getLastAccessibleStepIndex, assertStepInBounds } from '../steps/Steps';
 
@@ -24,6 +25,9 @@ function reducer(state: State | undefined, action: Actions.Action): State {
     case Actions.GO_TO_STEP: {
       return handle_goToStep(state, action);
     }
+    case Actions.SET_IMAGE_SOURCE: {
+      return handle_setImageSource(state, action);
+    }
     default:
       console.warn(`Unknown action type: "${action.type}"`);
       return state;
@@ -48,6 +52,17 @@ function handle_completeStep(state: State): State {
   }
 }
 
+function handle_setImageSource(state: State, action: Actions.Action): State {
+  let value = (action as Actions.StringPayloadAction).payload;
+  return {
+    ...state,
+    settings: {
+      ...state.settings,
+      imageSource: value,
+    },
+  };
+}
+
 function handle_goToStep(state: State, action: Actions.Action): State {
   let step = (action as Actions.GoToStepAction).payload;
   if (assertStepInBounds(step) && step <= state.steps.completed) {
@@ -68,13 +83,13 @@ function handle_setImage(state: State, action: Actions.Action): State {
   let payload = (action as Actions.SetImageAction).payload;
   let imageStateCopy = { ...state.images };
   switch (payload.imageName) {
-    case Actions.AFTER_IMAGE:
+    case AFTER_IMAGE:
       imageStateCopy.after = modifyImageState(imageStateCopy.after, payload.imageData);
       break;
-    case Actions.BEFORE_IMAGE:
+    case BEFORE_IMAGE:
       imageStateCopy.before = modifyImageState(imageStateCopy.before, payload.imageData);
       break;
-    case Actions.DIFF_IMAGE:
+    case DIFF_IMAGE:
       imageStateCopy.diff = modifyImageState(imageStateCopy.diff, payload.imageData);
       break;
     default:

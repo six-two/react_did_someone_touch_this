@@ -1,5 +1,6 @@
 import { createStore } from 'redux';
 import reducer from './reducer';
+import { SOURCE_WEBCAM } from './constants';
 import { getLastAccessibleStepIndex } from '../steps/Steps';
 
 export type ImageData = string;
@@ -13,6 +14,9 @@ export interface State {
   steps: {
     current: number,
     completed: number,
+  },
+  settings: {
+    imageSource: string,
   },
 }
 
@@ -34,8 +38,11 @@ export const fallbackState: State = {
     diff: DEFAULT_IMAGE_STATE,
   },
   steps: {
-    current: 0, 
+    current: 0,
     completed: getLastAccessibleStepIndex(0),
+  },
+  settings: {
+    imageSource: SOURCE_WEBCAM,
   },
 }
 

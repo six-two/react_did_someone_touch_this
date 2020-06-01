@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import ImageCompareView from './ImageCompareView';
 import TakeImageView from './TakeImageView';
 import InstructionView from './steps/Instructions';
+import SettingsView from './SettingsView';
+import GetImageView from './GetImage';
 import { State as ReduxState, ImageData } from './redux/store';
 import { setAfterImage, setBeforeImage, completedCurrentStep } from './redux/actions';
 import * as Steps from './steps/Steps';
@@ -34,11 +36,11 @@ class StepContentView extends React.Component<Props, State> {
       case Steps.STEP_INTRO:
         return this.renderWithNextButton(<InstructionView />);
       case Steps.STEP_SETTINGS:
-        return this.renderWithNextButton(<span>TODO settings</span>);
+        return this.renderWithNextButton(<SettingsView />);
       case Steps.STEP_BEFORE_PHOTO:
-        return <TakeImageView onPhoto={this.takeBeforeImage} />
+        return <GetImageView onImage={this.takeBeforeImage} />
       case Steps.STEP_AFTER_PHOTO:
-        return <TakeImageView onPhoto={this.takeAfterImage} backgroundImage={this.props.beforeImageData} />
+        return <GetImageView onImage={this.takeAfterImage} backgroundImage={this.props.beforeImageData} />
       case Steps.STEP_COMPARE:
         return <ImageCompareView />
       default:

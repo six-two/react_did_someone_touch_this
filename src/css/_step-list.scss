@@ -14,14 +14,23 @@
 
 .step-list {
   display: flex;
-  width: 100%;
+  width: 90%;
   padding: 0px;
+  margin: 0px auto;
 
   li {
     flex: 1;
     text-align: center;
     display: inline-block;
     @extend %button-style;
+
+    &:first-child {
+      margin-left: 0px;
+    }
+
+    &:last-child {
+      margin-right: 0px;
+    }
   }
 
   .selected {

@@ -16,6 +16,7 @@ class ImageUrlUploader extends React.Component<Props, State> {
   render() {
     return (
       <div className="image-upload">
+        <div>Upload your image</div>
         <input type='file' onChange={this.onChange} />
       </div>
     );

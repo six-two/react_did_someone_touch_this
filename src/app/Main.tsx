@@ -4,7 +4,6 @@ import StepContent from './StepContentDisplay';
 import '../css/main.scss';
 
 //TODO figure out if i should use restaints
-// add settings
 // add manual comarison: fadein/out, slide left/right, side by side
 // add settings persistence: local storage, url?
 // add downloading of photos

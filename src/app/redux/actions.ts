@@ -1,14 +1,12 @@
 import { ImageData } from './store';
+import { AFTER_IMAGE, BEFORE_IMAGE, DIFF_IMAGE } from './constants';
+
 
 // action types
 export const SET_IMAGE = "SET_IMAGE";
 export const COMPLETE_STEP = "COMPLETE_STEP";
 export const GO_TO_STEP = "GO_TO_STEP"
-// other constants
-export const AFTER_IMAGE = "AFTER_IMAGE";
-export const BEFORE_IMAGE = "BEFORE_IMAGE";
-export const DIFF_IMAGE = "DIFF_IMAGE";
-
+export const SET_IMAGE_SOURCE = "SET_IMAGE_SOURCE";
 
 // actions
 export interface ActionWithoutPayload {
@@ -28,7 +26,12 @@ export interface GoToStepAction {
   payload: number,
 }
 
-export type Action = SetImageAction | ActionWithoutPayload;
+export interface StringPayloadAction {
+  type: string,
+  payload: string,
+}
+
+export type Action = SetImageAction | ActionWithoutPayload | StringPayloadAction;
 
 // action creators
 export function setBeforeImage(imageData: ImageData): SetImageAction {
@@ -59,4 +62,8 @@ export function completedCurrentStep(): ActionWithoutPayload {
 
 export function goToStep(step: number): GoToStepAction {
   return { type: GO_TO_STEP, payload: step };
+}
+
+export function setImageSource(value: string): StringPayloadAction {
+  return { type: SET_IMAGE_SOURCE, payload: value };
 }
