@@ -30,6 +30,9 @@ class ImageCompareView extends React.Component<Props, State> {
     return (
       <div className="diff-view">
         <img src={this.props.diffImageData} alt="Differences between the before and after pictures" />
+        <a className="download-button" href={this.props.diffImageData} download="did_someone_touch_this.png" >
+          Download image
+        </a>
       </div>
     );
   }

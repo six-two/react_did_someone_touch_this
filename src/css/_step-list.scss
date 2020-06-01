@@ -3,9 +3,11 @@
   margin: 0px 15px;
   border: 2px solid black;
   border-radius: 10px;
+  text-align: center;
+  color: black;
 }
 
-.next-button {
+.next-button, .download-button {
   display: block;
   width: 200px;
   margin: 30px auto 15px auto;
@@ -20,7 +22,6 @@
 
   li {
     flex: 1;
-    text-align: center;
     display: inline-block;
     @extend %button-style;
 
