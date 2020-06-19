@@ -1,0 +1,7 @@
+title: Did someone touch this?
+description: Detect tampering by comparing before and after photos
+menu:
+  - title: Source code
+    url: "https://github.com/six-two/react_did_someone_touch_this"
+  - title: My other projects
+    url: "https://projects.six-two.dev/"
