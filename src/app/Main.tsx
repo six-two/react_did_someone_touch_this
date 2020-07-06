@@ -8,6 +8,8 @@ import '../css/main.scss';
 // add settings persistence: local storage, url?
 // maybe add an url parameter + chooser pattern so it can be safed
 // [opt] find out how to use key events?
+// let user choose resolution
+// why is it so slow on my smartphone? are 3 ~20MB pictures so hard to handle? :p
 
 class MainView extends React.Component {
   render() {

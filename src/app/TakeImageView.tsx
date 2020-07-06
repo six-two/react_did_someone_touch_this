@@ -3,7 +3,10 @@ import Webcam from "react-webcam";
 import { ImageData } from './redux/store';
 
 const VIDEO_CONSTRAINTS = {//TODO request best res
-  facingMode: { ideal: "environment" }
+  facingMode: { ideal: "environment" },
+  // try to request high res images (4K, allows both landscape and portrait)
+  width: { ideal: 4096 },
+  height: { ideal: 4096 },
 }
 
 interface Props {
