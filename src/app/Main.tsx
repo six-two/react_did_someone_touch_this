@@ -3,13 +3,17 @@ import StepDisplay from './StepDisplay';
 import StepContent from './StepContentDisplay';
 import '../css/main.scss';
 
-//TODO figure out if i should use restaints
+// --------------------------- TODOs -------------------------------
+// add screen inbetween before and after that turns the camera off
 // add manual comarison: fadein/out, slide left/right, side by side
-// add settings persistence: local storage, url?
-// maybe add an url parameter + chooser pattern so it can be safed
-// [opt] find out how to use key events?
-// let user choose resolution
+// let user choose webcam resolution
+// improve instructions
 // why is it so slow on my smartphone? are 3 ~20MB pictures so hard to handle? :p
+// Make it look ok on a smartphone
+// [opt] add settings persistence: local storage, url?
+//  -> maybe add an url parameter + chooser pattern so it can be saved
+// [opt] find out how to use key events?
+// -----------------------------------------------------------------
 
 class MainView extends React.Component {
   render() {

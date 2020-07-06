@@ -2,7 +2,6 @@ import React from 'react';
 
 class InstructionsView extends React.Component {
   render() {
-    //TODO improve
     return (
       <div className="instructions">
         <h2>How it works</h2>
