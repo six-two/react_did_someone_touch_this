@@ -25,7 +25,8 @@ class TakeImageView extends React.Component<Props> {
     return (
       <div className={className}>
         <Webcam ref={this.webcamRef} className="cam" onClick={this.onClick}
-          audio={false} videoConstraints={VIDEO_CONSTRAINTS} />
+          audio={false} videoConstraints={VIDEO_CONSTRAINTS}
+          forceScreenshotSourceSize={true} />
         {bgImg ? <img src={bgImg} alt="" onClick={this.onClick} /> : null}
       </div>
     );

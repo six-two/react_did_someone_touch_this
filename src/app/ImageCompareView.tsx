@@ -34,6 +34,9 @@ class ImageCompareView extends React.Component<Props, State> {
     return (
       <div className="diff-view">
         <h2>Comparison</h2>
+        <h3>Automatic change detection</h3>
+        This compares the both images, bug has a poor real world performance due to slight perspective shifts,
+        differences in lighting, etc. If you see poor results, scroll down to perform a manual comparision.
         All changes that were detected are marked in pink.
         <img src={this.props.diffImageData} alt="Differences between the before and after pictures" />
         <a className="download-button" href={this.props.diffImageData} download="did_someone_touch_this.png" >
@@ -53,7 +56,7 @@ class ImageCompareView extends React.Component<Props, State> {
         const options = {
           output: {
             errorType: "movementDifferenceIntensity",
-            transparency: 0.7,
+            // transparency: 0.7, // this makes the downloaded image transparent
             largeImageThreshold: 1500,
             useCrossOrigin: false,
             outputDiff: true

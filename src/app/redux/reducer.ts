@@ -88,6 +88,7 @@ function handle_setImage(state: State, action: Actions.Action): State {
       break;
     case BEFORE_IMAGE:
       imageStateCopy.before = modifyImageState(imageStateCopy.before, payload.imageData);
+      debug_print_image_size(payload.imageData);
       break;
     case DIFF_IMAGE:
       imageStateCopy.diff = modifyImageState(imageStateCopy.diff, payload.imageData);
@@ -100,6 +101,14 @@ function handle_setImage(state: State, action: Actions.Action): State {
     ...state,
     images: imageStateCopy,
   }
+}
+
+function debug_print_image_size(src: string) {
+  var img = document.createElement("img");
+  img.onload = function(event) {
+    console.log(`image dimendion: ${img.naturalWidth}x${img.naturalHeight}`);
+  }
+  img.src = src;
 }
 
 function modifyImageState(oldSubState: ImageState, newData: ImageData) {
