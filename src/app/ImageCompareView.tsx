@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { compare } from 'resemblejs';
 import { State as ReduxState, ImageState, ImageData } from './redux/store';
 import { setDiffImage } from './redux/actions';
+import DownloadImageButton from './DownloadImageButton';
 
 
 interface Props {
@@ -27,8 +28,8 @@ class ImageCompareView extends React.Component<Props, State> {
   render() {
     this.updateDiffImageIfNeeded();
 
-    if (!this.props.diffImageData){
-      return <span className="err-msg">Internal error: can not compare images</span>
+    if (!this.props.diffImageData) {
+      return <div>Comparing images...</div>
     }
 
     return (
@@ -39,9 +40,11 @@ class ImageCompareView extends React.Component<Props, State> {
         differences in lighting, etc. If you see poor results, scroll down to perform a manual comparision.
         All changes that were detected are marked in pink.
         <img src={this.props.diffImageData} alt="Differences between the before and after pictures" />
-        <a className="download-button" href={this.props.diffImageData} download="did_someone_touch_this.png" >
-          Download image
-        </a>
+        {this.props.diffImageData &&
+          <DownloadImageButton
+            buttonText="Download comparison image"
+            fileName="before-after-compare.png"
+            imageData={this.props.diffImageData} />}
       </div>
     );
   }

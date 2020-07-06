@@ -1,13 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { State as ReduxState, ImageData } from './redux/store';
+import store, { State as ReduxState, ImageData } from './redux/store';
 import { SOURCE_WEBCAM, SOURCE_FILE } from './redux/constants';
 import TakeImageView from './TakeImageView';
 import ImageUpload from './ImageUpload';
+import DownloadImageButton from './DownloadImageButton';
 
 
 interface Props {
   imageSource: string,
+  currentImage: string | null,
   onImage: (image: ImageData) => void,
   backgroundImage?: ImageData,
 }
@@ -27,7 +29,9 @@ class GetImageView extends React.Component<Props> {
         return <div>
           <h2>Take a photo</h2>
           Allow camera access and touch/click the image below.
-          <TakeImageView onPhoto={this.props.onImage} backgroundImage={this.props.backgroundImage} />;
+          <TakeImageView onPhoto={this.props.onImage} backgroundImage={this.props.backgroundImage} />
+
+          {this.renderDownloadButton()}
         </div>
       case SOURCE_FILE:
         return <div>
@@ -35,10 +39,21 @@ class GetImageView extends React.Component<Props> {
           <ImageUpload setImage={this.props.onImage} />
         </div>
       default:
-        throw new Error(`Unknown image source: "${this.props.imageSource}"`)
+        throw new Error(`Unknown image source: "${this.props.imageSource}"`);
     };
   }
+
+  renderDownloadButton() {
+    if (this.props.currentImage) {
+      let screenshotFormat = store.getState().settings.screenshotFormat;
+      return <DownloadImageButton
+        buttonText="Download last image taken"
+        fileName={`webcam-image.${screenshotFormat}`}
+        imageData={this.props.currentImage} />
+    }
+  }
 }
+
 
 const mapStateToProps = (state: ReduxState, ownProps: any) => {
   return {

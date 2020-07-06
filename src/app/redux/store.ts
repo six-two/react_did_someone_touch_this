@@ -17,6 +17,7 @@ export interface State {
   },
   settings: {
     imageSource: string,
+    screenshotFormat: "png" | "jpeg" | "webp",
   },
 }
 
@@ -43,6 +44,7 @@ export const fallbackState: State = {
   },
   settings: {
     imageSource: SOURCE_WEBCAM,
+    screenshotFormat: "png",
   },
 }
 

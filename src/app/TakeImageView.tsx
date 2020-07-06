@@ -1,6 +1,6 @@
 import React from 'react';
 import Webcam from "react-webcam";
-import { ImageData } from './redux/store';
+import store, { ImageData } from './redux/store';
 
 const VIDEO_CONSTRAINTS = {//TODO request best res
   facingMode: { ideal: "environment" },
@@ -25,11 +25,13 @@ class TakeImageView extends React.Component<Props> {
   render() {
     const bgImg = this.props.backgroundImage;
     const className = "take-image-div" + (bgImg ? " transparent-cam" : "");
+    let screenshotFormat = store.getState().settings.screenshotFormat;
     return (
       <div className={className}>
         <Webcam ref={this.webcamRef} className="cam" onClick={this.onClick}
           audio={false} videoConstraints={VIDEO_CONSTRAINTS}
-          forceScreenshotSourceSize={true} />
+          forceScreenshotSourceSize={true}
+          screenshotFormat={`image/${screenshotFormat}` as any} />
         {bgImg ? <img src={bgImg} alt="" onClick={this.onClick} /> : null}
       </div>
     );

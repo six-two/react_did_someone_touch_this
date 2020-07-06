@@ -13,8 +13,8 @@ interface Props {
   setAfterImage: (imageData: ImageData) => void,
   setBeforeImage: (imageData: ImageData) => void,
   completeStep: () => void,
-  beforeImageData: ImageData,
-  afterImageData: ImageData,
+  beforeImageData: ImageData | null,
+  afterImageData: ImageData | null,
   step: number,
 }
 
@@ -37,9 +37,14 @@ class StepContentView extends React.Component<Props, State> {
       case Steps.STEP_SETTINGS:
         return this.renderWithNextButton(<SettingsView />);
       case Steps.STEP_BEFORE_PHOTO:
-        return <GetImageView onImage={this.takeBeforeImage} />
+        return <GetImageView
+          onImage={this.takeBeforeImage}
+          currentImage={this.props.beforeImageData} />
       case Steps.STEP_AFTER_PHOTO:
-        return <GetImageView onImage={this.takeAfterImage} backgroundImage={this.props.beforeImageData} />
+        return <GetImageView
+          onImage={this.takeAfterImage}
+          currentImage={this.props.afterImageData}
+          backgroundImage={this.props.beforeImageData} />
       case Steps.STEP_COMPARE:
         return <ImageCompareView />
       default:
