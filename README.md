@@ -5,6 +5,15 @@ The app then compares both photos to spot differences. This should allow the use
 
 There once was an app called Photo Trap, but sadly I only learned of it *after* it was pulled from the App Store.
 
+## Demo
+
+I host a version of the app [here](https://projects.six-two.dev/react_did_someone_touch_this), but it might sometimes lag behind the master branch.
+
+## Privacy
+
+By design all processing is done on your device.
+This means none of your data are uploaded to a server. I use some third party libraries, but as far as I know they don't steal your information 😉.
+
 ## Available Scripts
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
