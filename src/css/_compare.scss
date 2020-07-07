@@ -1,0 +1,13 @@
+.img-diff.crossfade {
+  margin-bottom: 20px;
+
+  .slider-div {
+    display: flex;
+
+    .rc-slider {
+      flex: 1;
+      margin: 5px 15px;
+      align-content: center;
+    }
+  }
+}

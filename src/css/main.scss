@@ -1,6 +1,7 @@
 @import "step-list";
 @import "webcam";
 @import "settings";
+@import "compare";
 
 #root {
   background: eee;
@@ -29,6 +30,17 @@
       display: block;
       margin: 20px auto 0px auto;
       width: 100%;
+    }
+  }
+
+  .overlay-container {
+    position: relative;
+
+    .on-top {
+      position: absolute;
+      margin: 0px;
+      top: 0;
+      left: 0;
     }
   }
 }

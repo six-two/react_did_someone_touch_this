@@ -5,6 +5,7 @@ import { State as ReduxState, ImageState, ImageData } from './redux/store';
 import { setDiffImage } from './redux/actions';
 import DownloadImageButton from './DownloadImageButton';
 import LeftRightSlider from './compare-images/LeftRightSlider';
+import CrossfadeCompare from './compare-images/CrossfadeCompare';
 
 
 interface Props {
@@ -52,11 +53,15 @@ class ImageCompareView extends React.Component<Props, State> {
             imageData={this.props.diffImageData} />}
 
         <h3>Manual comparison</h3>
-        <LeftRightSlider
+        <CrossfadeCompare
           beforeImage={this.props.beforeImage.data}
           afterImage={this.props.afterImage.data}
         />
       </div>
+      // <LeftRightSlider
+    //   beforeImage={this.props.beforeImage.data}
+    //   afterImage={this.props.afterImage.data}
+    // />
     );
   }
 
