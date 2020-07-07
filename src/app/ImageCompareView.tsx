@@ -1,99 +1,53 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { compare } from 'resemblejs';
-import { State as ReduxState, ImageState, ImageData } from './redux/store';
-import { setDiffImage } from './redux/actions';
-import DownloadImageButton from './DownloadImageButton';
+import { State as ReduxState, ImageData } from './redux/store';
+import { setComparisonType } from './redux/actions';
+import * as C from './redux/constants';
+import AutomaticCompare from './compare-images/AutomaticCompare';
 import LeftRightSlider from './compare-images/LeftRightSlider';
 import CrossfadeCompare from './compare-images/CrossfadeCompare';
+import Dropdown from './Dropdown';
+
+const TYPES = new Map<string, string>();
+TYPES.set(C.COMPARE_AUTOMATIC, "Automatic");
+TYPES.set(C.COMPARE_SLIDER_RIGHT_LEFT, "Slider: Right - Left");
+TYPES.set(C.COMPARE_CROSSFADE, "Crossfade");
+// TYPES.set(C.COMPARE_SIDE_BY_SIDE, "Side by side");
 
 
 interface Props {
-  beforeImage: ImageState,
-  afterImage: ImageState,
-  diffImageData: ImageData,
-  setDiffImage: (imageData: ImageData) => void,
+  beforeImage: ImageData | null,
+  afterImage: ImageData | null,
+  type: string,
 }
 
-interface State {
-}
-
-class ImageCompareView extends React.Component<Props, State> {
-  imageVersion: number;
-
-  constructor(props: Props) {
-    super(props);
-    this.imageVersion = -1;
-    this.state = {};
+class ImageCompareView extends React.Component<Props> {
+  render() {
+    return <div className="diff-view">
+      <h2>Comparison</h2>
+        Type: <Dropdown
+        optionMap={TYPES}
+        value={this.props.type}
+        onValueChange={(x) => setComparisonType(x)} />
+      {this.renderContents()}
+    </div>
   }
 
-  render() {
-    if (!this.props.beforeImage.data || !this.props.afterImage.data) {
+  renderContents() {
+    const before = this.props.beforeImage;
+    const after = this.props.afterImage;
+    if (!before || !after) {
       return <div>Error: Before or after image is missing. This is probably a bug!</div>
     }
-
-    this.updateDiffImageIfNeeded();
-
-    if (!this.props.diffImageData) {
-      return <div>Comparing images...</div>
-    }
-
-    return (
-      <div className="diff-view">
-        <h2>Comparison</h2>
-        <h3>Automatic change detection</h3>
-        This compares the both images, bug has a poor real world performance due to slight perspective shifts,
-        differences in lighting, etc. If you see poor results, scroll down to perform a manual comparision.
-        All changes that were detected are marked in pink.
-        <img src={this.props.diffImageData} alt="Differences between the before and after pictures" />
-        {this.props.diffImageData &&
-          <DownloadImageButton
-            buttonText="Download comparison image"
-            fileName="before-after-compare.png"
-            imageData={this.props.diffImageData} />}
-
-        <h3>Manual comparison</h3>
-        <CrossfadeCompare
-          beforeImage={this.props.beforeImage.data}
-          afterImage={this.props.afterImage.data}
-        />
-      </div>
-      // <LeftRightSlider
-    //   beforeImage={this.props.beforeImage.data}
-    //   afterImage={this.props.afterImage.data}
-    // />
-    );
-  }
-
-  updateDiffImageIfNeeded() {
-    const currentVersion = this.props.afterImage.updateCount + this.props.beforeImage.updateCount;
-    if (currentVersion !== this.imageVersion) {
-      this.imageVersion = currentVersion;// do not request a repaint
-      const after = this.props.afterImage.data;
-      const before = this.props.beforeImage.data;
-      if (after && before) {
-        const options = {
-          output: {
-            errorType: "movementDifferenceIntensity",
-            // transparency: 0.7, // this makes the downloaded image transparent
-            largeImageThreshold: 1500,
-            useCrossOrigin: false,
-            outputDiff: true
-          },
-          scaleToSameSize: true,
-          ignore: "colors",
-        };
-        compare(before, after, options, this.resembleCallback);
-      }
-    }
-  }
-
-  resembleCallback = (error: any, data: any) => {
-    if (error) {
-      console.error("An error occured while comparing the images: ", error);
-    } else {
-      const diffImageData: string = data.getImageDataUrl();
-      this.props.setDiffImage(diffImageData);
+    switch (this.props.type) {
+      case C.COMPARE_AUTOMATIC:
+        return <AutomaticCompare beforeImage={before} afterImage={after} />
+      case C.COMPARE_CROSSFADE:
+        return <CrossfadeCompare beforeImage={before} afterImage={after} />
+      case C.COMPARE_SLIDER_RIGHT_LEFT:
+        return <LeftRightSlider beforeImage={before} afterImage={after} />
+      default:
+        return <div>Unknown type: {this.props.type}</div>
     }
   }
 }
@@ -101,15 +55,10 @@ class ImageCompareView extends React.Component<Props, State> {
 const mapStateToProps = (state: ReduxState, ownProps: any) => {
   return {
     ...ownProps,
-    beforeImage: state.images.before,
-    afterImage: state.images.after,
-    diffImageData: state.images.diff.data,
-  };
-};
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    setDiffImage: (imageData: ImageData) => dispatch(setDiffImage(imageData)),
+    beforeImage: state.images.before.data,
+    afterImage: state.images.after.data,
+    type: state.comparisonType,
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ImageCompareView);
+export default connect(mapStateToProps)(ImageCompareView);

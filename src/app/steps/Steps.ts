@@ -21,7 +21,7 @@ export const STEP_AFTER_PHOTO = addStep("After photo");
 export const STEP_COMPARE = addStep("Compare photos");
 
 export const STEPS = steps;
-console.debug(steps);
+// console.debug(steps);
 
 export function assertStepInBounds(step: number, throwError: boolean = false): boolean {
   let isInBounds = step >= 0 && step < STEPS.length;

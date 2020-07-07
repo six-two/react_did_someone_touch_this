@@ -1,5 +1,5 @@
 import React from "react";
-import Slider, { Range } from 'rc-slider';
+import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
 const MySlider = Slider as any;
@@ -15,18 +15,18 @@ export default class CrossfadeCompare extends React.Component<Props, State> {
   render() {
     return <div className="img-diff crossfade">
       <div className="overlay-container">
-        <img src={this.props.beforeImage} />
-        <img className="on-top" src={this.props.afterImage}
+        <img src={this.props.beforeImage} alt="" />
+        <img className="on-top" src={this.props.afterImage} alt=""
           style={{ opacity: this.state.sliderValue / 100 }} />
       </div>
       <div className="slider-div">
         <span>Before</span>
-          <MySlider
-            min={0}
-            max={100}
-            value={this.state.sliderValue}
-            onChange={this.onOpacityChange}
-          />
+        <MySlider
+          min={0}
+          max={100}
+          value={this.state.sliderValue}
+          onChange={this.onOpacityChange}
+        />
         <span>After</span>
       </div>
     </div>
