@@ -14,11 +14,6 @@ export default class CrossfadeCompare extends React.Component<Props, State> {
 
   render() {
     return <div className="img-diff crossfade">
-      <div className="overlay-container">
-        <img src={this.props.beforeImage} alt="" />
-        <img className="on-top" src={this.props.afterImage} alt=""
-          style={{ opacity: this.state.sliderValue / 100 }} />
-      </div>
       <div className="slider-div">
         <span>Before</span>
         <MySlider
@@ -28,6 +23,11 @@ export default class CrossfadeCompare extends React.Component<Props, State> {
           onChange={this.onOpacityChange}
         />
         <span>After</span>
+      </div>
+      <div className="overlay-container">
+        <img src={this.props.beforeImage} alt="" />
+        <img className="on-top" src={this.props.afterImage} alt=""
+          style={{ opacity: this.state.sliderValue / 100 }} />
       </div>
     </div>
   }

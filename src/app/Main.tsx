@@ -5,7 +5,6 @@ import '../css/main.scss';
 
 // --------------------------- TODOs -------------------------------
 // add screen inbetween before and after that turns the camera off
-// add manual comarison: fadein/out, slide left/right, side by side
 // let user choose webcam resolution
 // improve instructions
 // why is it so slow on my smartphone? are 3 ~20MB pictures so hard to handle? :p
