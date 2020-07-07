@@ -19,7 +19,7 @@ class MainView extends React.Component {
     return (
       <div>
         <div className="err-msg">
-          This website is still in pre alpha state. It is likely instable, buggy, ugly and might get broken from time to time.
+          This website is still in early development.
         </div>
         <div className="app-contents">
           <StepDisplay />
