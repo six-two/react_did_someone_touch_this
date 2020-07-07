@@ -17,6 +17,10 @@ export interface State {
   settings: {
     imageSource: string,
     screenshotFormat: "png" | "jpeg" | "webp",
+    preferredResolution: {
+      width: number,
+      height: number,
+    },
   },
   comparisonType: string,
 }
@@ -44,6 +48,10 @@ export const fallbackState: State = {
   settings: {
     imageSource: C.SOURCE_WEBCAM,
     screenshotFormat: "png",
+    preferredResolution: {
+      width: 1920,
+      height: 1080,
+    },
   },
   comparisonType: C.COMPARE_AUTOMATIC,
 }

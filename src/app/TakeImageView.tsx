@@ -2,13 +2,6 @@ import React from 'react';
 import Webcam from "react-webcam";
 import store, { ImageData } from './redux/store';
 
-const VIDEO_CONSTRAINTS = {
-  facingMode: { ideal: "environment" },
-  // try to request high res images (4K, allows both landscape and portrait)
-  width: { ideal: 4096 },
-  height: { ideal: 4096 },
-}
-
 interface Props {
   backgroundImage?: ImageData,
   onPhoto: (image: ImageData) => void,
@@ -25,7 +18,14 @@ class TakeImageView extends React.Component<Props> {
   render() {
     const bgImg = this.props.backgroundImage;
     const className = "take-image-div" + (bgImg ? " transparent-cam" : "");
-    let screenshotFormat = store.getState().settings.screenshotFormat;
+    const screenshotFormat = store.getState().settings.screenshotFormat;
+    const resolution = store.getState().settings.preferredResolution;
+    const VIDEO_CONSTRAINTS = {
+      facingMode: { ideal: "environment" },
+      width: { ideal: resolution.width },
+      height: { ideal: resolution.height },
+    };
+
     return (
       <div className={className}>
         <Webcam ref={this.webcamRef} className="cam" onClick={this.onClick}
