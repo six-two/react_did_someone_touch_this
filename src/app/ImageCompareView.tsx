@@ -4,6 +4,7 @@ import { compare } from 'resemblejs';
 import { State as ReduxState, ImageState, ImageData } from './redux/store';
 import { setDiffImage } from './redux/actions';
 import DownloadImageButton from './DownloadImageButton';
+import LeftRightSlider from './compare-images/LeftRightSlider';
 
 
 interface Props {
@@ -26,6 +27,10 @@ class ImageCompareView extends React.Component<Props, State> {
   }
 
   render() {
+    if (!this.props.beforeImage.data || !this.props.afterImage.data) {
+      return <div>Error: Before or after image is missing. This is probably a bug!</div>
+    }
+
     this.updateDiffImageIfNeeded();
 
     if (!this.props.diffImageData) {
@@ -45,6 +50,12 @@ class ImageCompareView extends React.Component<Props, State> {
             buttonText="Download comparison image"
             fileName="before-after-compare.png"
             imageData={this.props.diffImageData} />}
+
+        <h3>Manual comparison</h3>
+        <LeftRightSlider
+          beforeImage={this.props.beforeImage.data}
+          afterImage={this.props.afterImage.data}
+        />
       </div>
     );
   }
