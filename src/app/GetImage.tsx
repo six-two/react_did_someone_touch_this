@@ -31,7 +31,10 @@ class GetImageView extends React.Component<Props> {
           Allow camera access and touch/click the image below.
           <TakeImageView onPhoto={this.props.onImage} backgroundImage={this.props.backgroundImage} />
 
-          {this.renderDownloadButton()}
+          <DownloadImageButton
+            buttonText="Download last image taken"
+            fileName={`webcam-image`}
+            imageData={this.props.currentImage} />
         </div>
       case SOURCE_FILE:
         return <div>
@@ -41,16 +44,6 @@ class GetImageView extends React.Component<Props> {
       default:
         throw new Error(`Unknown image source: "${imageSource}"`);
     };
-  }
-
-  renderDownloadButton() {
-    if (this.props.currentImage) {
-      let screenshotFormat = store.getState().settings.screenshotFormat;
-      return <DownloadImageButton
-        buttonText="Download last image taken"
-        fileName={`webcam-image.${screenshotFormat}`}
-        imageData={this.props.currentImage} />
-    }
   }
 }
 

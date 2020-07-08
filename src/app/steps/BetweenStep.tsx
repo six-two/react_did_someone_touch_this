@@ -12,7 +12,7 @@ interface Props {
 
 class GetImageView extends React.Component<Props> {
   render() {
-    if (!this.props.beforeImage){
+    if (!this.props.beforeImage) {
       return <div>Before image not found: please go back to the previous step</div>
     }
     return <div>
@@ -27,22 +27,15 @@ class GetImageView extends React.Component<Props> {
       <img src={this.props.beforeImage} alt="" />
 
       <div className="buttons">
-        {this.renderDownloadButton()}
+        <DownloadImageButton
+          buttonText="Download image"
+          fileName={`webcam-image`}
+          imageData={this.props.beforeImage} />
         <button className="next-button" onClick={(e: any) => completedCurrentStep()}>
           Next step
         </button>
       </div>
     </div>
-  }
-
-  renderDownloadButton() {
-    if (this.props.beforeImage) {
-      let screenshotFormat = store.getState().settings.screenshotFormat;
-      return <DownloadImageButton
-        buttonText="Download image"
-        fileName={`webcam-image.${screenshotFormat}`}
-        imageData={this.props.beforeImage} />
-    }
   }
 }
 

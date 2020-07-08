@@ -33,7 +33,7 @@ export default class AutomaticCompare extends React.Component<Props, State> {
         <img src={this.state.diffImage} alt="Differences between the before and after pictures" />
         <DownloadImageButton
           buttonText="Download comparison image"
-          fileName="before-after-compare.png"
+          fileName="before-after-compare"
           imageData={this.state.diffImage} />
       </div>
     } else {

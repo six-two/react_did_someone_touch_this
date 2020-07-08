@@ -7,11 +7,11 @@ import '../css/main.scss';
 // let user choose webcam resolution
 // improve instructions
 // why is it so slow on my smartphone? are 3 ~20MB pictures so hard to handle? :p
-// make download button auto-detect image format
 // Make it look ok on a smartphone
 // [opt] add settings persistence: local storage, url?
 //  -> maybe add an url parameter + chooser pattern so it can be saved
 // [opt] find out how to use key events?
+// make a error message component
 // -----------------------------------------------------------------
 
 class MainView extends React.Component {
