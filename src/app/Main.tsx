@@ -4,10 +4,10 @@ import StepContent from './StepContentDisplay';
 import '../css/main.scss';
 
 // --------------------------- TODOs -------------------------------
-// add screen inbetween before and after that turns the camera off
 // let user choose webcam resolution
 // improve instructions
 // why is it so slow on my smartphone? are 3 ~20MB pictures so hard to handle? :p
+// make download button auto-detect image format
 // Make it look ok on a smartphone
 // [opt] add settings persistence: local storage, url?
 //  -> maybe add an url parameter + chooser pattern so it can be saved

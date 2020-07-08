@@ -39,7 +39,9 @@ class TakeImageView extends React.Component<Props> {
 
   onClick = (event: any) => {
     let photo = this.webcamRef.current.getScreenshot();
-    this.props.onPhoto(photo);
+    if (photo) {
+      this.props.onPhoto(photo);
+    }
   }
 }
 

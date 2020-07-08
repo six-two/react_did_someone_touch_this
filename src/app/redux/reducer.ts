@@ -61,7 +61,7 @@ function handle_completeStep(state: State): State {
 }
 
 function handle_setImageSource(state: State, action: Actions.Action): State {
-  let value = (action as Actions.StringPayloadAction).payload;
+  let value = action.payload as string;
   return {
     ...state,
     settings: {
@@ -72,7 +72,7 @@ function handle_setImageSource(state: State, action: Actions.Action): State {
 }
 
 function handle_goToStep(state: State, action: Actions.Action): State {
-  let step = (action as Actions.GoToStepAction).payload;
+  let step = action.payload as number;
   if (assertStepInBounds(step) && step <= state.steps.completed) {
     return {
       ...state,
@@ -88,7 +88,7 @@ function handle_goToStep(state: State, action: Actions.Action): State {
 }
 
 function handle_setImage(state: State, action: Actions.Action): State {
-  let payload = (action as Actions.SetImageAction).payload;
+  let payload = action.payload as Actions.SetImagePayload;
   let imageStateCopy = { ...state.images };
   switch (payload.imageName) {
     case C.AFTER_IMAGE:
@@ -102,10 +102,11 @@ function handle_setImage(state: State, action: Actions.Action): State {
       console.warn(`Unknown image name: "${payload.imageName}"`);
       return state;
   }
-  return {
+  // set the image AND go to the next step
+  return handle_completeStep({
     ...state,
     images: imageStateCopy,
-  }
+  });
 }
 
 function debug_print_image_size(src: string) {

@@ -6,37 +6,23 @@ import * as C from './constants';
 const d = store.dispatch;
 
 // actions
-export interface ActionWithoutPayload {
+export interface Action {
   type: string,
+  payload: string | number | null | SetImagePayload,
 }
 
-export interface SetImageAction {
-  type: string,
-  payload: {
-    imageName: string,
-    imageData: ImageData,
-  },
+export interface SetImagePayload {
+  imageName: string,
+  imageData: ImageData,
 }
-
-export interface GoToStepAction {
-  type: string,
-  payload: number,
-}
-
-export interface StringPayloadAction {
-  type: string,
-  payload: string,
-}
-
-export type Action = SetImageAction | ActionWithoutPayload | StringPayloadAction;
 
 // action creators
-export function setBeforeImage(imageData: ImageData): SetImageAction {
-  return setImage(C.BEFORE_IMAGE, imageData);
+export function setBeforeImage(imageData: ImageData) {
+  setImage(C.BEFORE_IMAGE, imageData);
 }
 
-export function setAfterImage(imageData: ImageData): SetImageAction {
-  return setImage(C.AFTER_IMAGE, imageData);
+export function setAfterImage(imageData: ImageData) {
+  setImage(C.AFTER_IMAGE, imageData);
 }
 
 export function setComparisonType(value: string) {
@@ -46,24 +32,24 @@ export function setComparisonType(value: string) {
   });
 }
 
-function setImage(imageName: string, imageData: ImageData): SetImageAction {
-  return {
+function setImage(imageName: string, imageData: ImageData) {
+  d({
     type: C.SET_IMAGE,
     payload: {
       imageName: imageName,
       imageData: imageData,
     },
-  };
+  });
 }
 
-export function completedCurrentStep(): ActionWithoutPayload {
-  return { type: C.COMPLETE_STEP };
+export function completedCurrentStep() {
+  d({ type: C.COMPLETE_STEP, payload: null });
 }
 
-export function goToStep(step: number): GoToStepAction {
-  return { type: C.GO_TO_STEP, payload: step };
+export function goToStep(step: number) {
+  d({ type: C.GO_TO_STEP, payload: step });
 }
 
-export function setImageSource(value: string): StringPayloadAction {
-  return { type: C.SET_IMAGE_SOURCE, payload: value };
+export function setImageSource(value: string) {
+  d({ type: C.SET_IMAGE_SOURCE, payload: value });
 }

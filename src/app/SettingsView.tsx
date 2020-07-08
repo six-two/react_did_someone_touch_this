@@ -19,7 +19,7 @@ class SettingsView extends React.Component<Props> {
       <div className="settings">
         <h2>Settings</h2>
         <span className="label">Image source:</span>
-        <OptionView options={SOURCES} value={this.props.imageSource} onChange={this.props.setImageSource} />
+        <OptionView options={SOURCES} value={this.props.imageSource} onChange={setImageSource} />
       </div>
     );
   }
@@ -31,10 +31,4 @@ const mapStateToProps = (state: ReduxState, ownProps: any) => {
     imageSource: state.settings.imageSource,
   };
 };
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    setImageSource: (value: string) => dispatch(setImageSource(value)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SettingsView);
+export default connect(mapStateToProps)(SettingsView);

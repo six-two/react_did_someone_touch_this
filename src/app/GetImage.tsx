@@ -8,7 +8,6 @@ import DownloadImageButton from './DownloadImageButton';
 
 
 interface Props {
-  imageSource: string,
   currentImage: string | null,
   onImage: (image: ImageData) => void,
   backgroundImage?: ImageData,
@@ -24,7 +23,8 @@ class GetImageView extends React.Component<Props> {
   }
 
   renderContents() {
-    switch (this.props.imageSource) {
+    const imageSource = store.getState().settings.imageSource;
+    switch (imageSource) {
       case SOURCE_WEBCAM:
         return <div>
           <h2>Take a photo</h2>
@@ -39,7 +39,7 @@ class GetImageView extends React.Component<Props> {
           <ImageUpload setImage={this.props.onImage} />
         </div>
       default:
-        throw new Error(`Unknown image source: "${this.props.imageSource}"`);
+        throw new Error(`Unknown image source: "${imageSource}"`);
     };
   }
 
@@ -54,16 +54,4 @@ class GetImageView extends React.Component<Props> {
   }
 }
 
-
-const mapStateToProps = (state: ReduxState, ownProps: any) => {
-  return {
-    ...ownProps,
-    imageSource: state.settings.imageSource,
-  };
-};
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(GetImageView);
+export default GetImageView;

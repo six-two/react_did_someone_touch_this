@@ -4,15 +4,13 @@ import ImageCompareView from './ImageCompareView';
 import InstructionView from './steps/Instructions';
 import SettingsView from './SettingsView';
 import GetImageView from './GetImage';
+import BetweenPhotosView from './steps/BetweenStep';
 import { State as ReduxState, ImageData } from './redux/store';
-import { setAfterImage, setBeforeImage, completedCurrentStep } from './redux/actions';
+import { completedCurrentStep, setBeforeImage, setAfterImage } from './redux/actions';
 import * as Steps from './steps/Steps';
 
 
 interface Props {
-  setAfterImage: (imageData: ImageData) => void,
-  setBeforeImage: (imageData: ImageData) => void,
-  completeStep: () => void,
   beforeImageData: ImageData | null,
   afterImageData: ImageData | null,
   step: number,
@@ -38,13 +36,15 @@ class StepContentView extends React.Component<Props, State> {
         return this.renderWithNextButton(<SettingsView />);
       case Steps.STEP_BEFORE_PHOTO:
         return <GetImageView
-          onImage={this.takeBeforeImage}
+          onImage={setBeforeImage}
           currentImage={this.props.beforeImageData} />
+      case Steps.STEP_BETWEEN_PHOTOS:
+        return <BetweenPhotosView beforeImage={this.props.beforeImageData} />
       case Steps.STEP_AFTER_PHOTO:
         return <GetImageView
-          onImage={this.takeAfterImage}
+          onImage={setAfterImage}
           currentImage={this.props.afterImageData}
-          backgroundImage={this.props.beforeImageData} />
+          backgroundImage={this.props.beforeImageData || undefined} />
       case Steps.STEP_COMPARE:
         return <ImageCompareView />
       default:
@@ -52,20 +52,10 @@ class StepContentView extends React.Component<Props, State> {
     }
   }
 
-  takeBeforeImage = (image: ImageData) => {
-    this.props.setBeforeImage(image);
-    this.props.completeStep();
-  }
-
-  takeAfterImage = (image: ImageData) => {
-    this.props.setAfterImage(image);
-    this.props.completeStep();
-  }
-
   renderWithNextButton(component: any) {
     return (<div>
       {component}
-      <button className="next-button" onClick={this.props.completeStep}>
+      <button className="next-button" onClick={(e: any) => completedCurrentStep()}>
         Next step
       </button>
     </div>);
@@ -82,12 +72,4 @@ const mapStateToProps = (state: ReduxState, ownProps: any) => {
   };
 };
 
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    setBeforeImage: (imageData: ImageData) => dispatch(setBeforeImage(imageData)),
-    setAfterImage: (imageData: ImageData) => dispatch(setAfterImage(imageData)),
-    completeStep: () => dispatch(completedCurrentStep()),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(StepContentView);
+export default connect(mapStateToProps)(StepContentView);
