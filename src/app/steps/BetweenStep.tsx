@@ -1,8 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import store from '../redux/store';
 import { completedCurrentStep } from '../redux/actions';
-import { SOURCE_WEBCAM, SOURCE_FILE } from '../redux/constants';
 import DownloadImageButton from '../DownloadImageButton';
 
 

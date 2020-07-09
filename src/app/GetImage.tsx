@@ -1,6 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import store, { State as ReduxState, ImageData } from './redux/store';
+import store, { ImageData } from './redux/store';
 import { SOURCE_WEBCAM, SOURCE_FILE } from './redux/constants';
 import TakeImageView from './TakeImageView';
 import ImageUpload from './ImageUpload';
