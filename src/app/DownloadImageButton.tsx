@@ -13,7 +13,7 @@ function detectImageFormat(imageDataUrl: string) {
     console.error("Internal error in detectImageFormat", e);
   }
   console.warn(`Auto detect format failed. Data url looks like "${imageDataUrl.slice(0, 100)}" (cut off after 100 characters)`);
-  return ".png";//just guess
+  return "unknown.png";//just guess, signal unknown to user
 }
 
 export default function DownloadImageButton(props: Props) {

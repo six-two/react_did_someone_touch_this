@@ -7,6 +7,7 @@ import AutomaticCompare from './compare-images/AutomaticCompare';
 import LeftRightSlider from './compare-images/LeftRightSlider';
 import CrossfadeCompare from './compare-images/CrossfadeCompare';
 import Dropdown from './Dropdown';
+import { BugMessage } from './ErrorMessage';
 
 const TYPES = new Map<string, string>();
 TYPES.set(C.COMPARE_AUTOMATIC, "Automatic");
@@ -35,9 +36,12 @@ class ImageCompareView extends React.Component<Props> {
 
   renderContents() {
     const before = this.props.beforeImage;
+    if (!before) {
+      return <BugMessage message="Before image is missing" />
+    }
     const after = this.props.afterImage;
-    if (!before || !after) {
-      return <div>Error: Before or after image is missing. This is probably a bug!</div>
+    if (!after) {
+      return <BugMessage message="After image is missing" />
     }
     switch (this.props.type) {
       case C.COMPARE_AUTOMATIC:
@@ -47,7 +51,7 @@ class ImageCompareView extends React.Component<Props> {
       case C.COMPARE_SLIDER_RIGHT_LEFT:
         return <LeftRightSlider beforeImage={before} afterImage={after} />
       default:
-        return <div>Unknown type: {this.props.type}</div>
+        return <BugMessage message={`Unknown type: ${this.props.type}`} />
     }
   }
 }

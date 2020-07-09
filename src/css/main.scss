@@ -12,6 +12,10 @@ $big-screen: "only screen and (min-width: 768px)";
     width: 100%;
   }
 
+  .bold {
+    font-weight: bold;
+  }
+
   .err-msg {
     border-radius: 5px;
     background-color: #ffaaaa;

@@ -1,16 +1,14 @@
 import React from 'react';
 
-export default class DropdownChooser extends React.Component<Props> {
-  render() {
-    let options = [...this.props.optionMap.entries()];
-    return <select value={this.props.value} onChange={this.onChange}>
-      {options.map(([key, value]) => <option key={key} value={key}>{value}</option>)}
-    </select>
-  }
+export default function DropdownChooser(props: Props) {
+  const onChange = (e: any) => props.onValueChange(e.target.value);
+  const options = [...props.optionMap.entries()];
 
-  onChange = (e: any) => {
-    this.props.onValueChange(e.target.value);
-  }
+  return <select value={props.value} onChange={onChange}>
+    {options.map(([key, value]) =>
+      <option key={key} value={key}>{value}</option>)
+    }
+  </select>
 }
 
 interface Props {

@@ -6,10 +6,9 @@ import '../css/main.scss';
 // --------------------------- TODOs -------------------------------
 // improve instructions
 // why is it so slow on my smartphone? are 3 ~20MB pictures so hard to handle? :p
-// Make it look ok on a smartphone
+// Make it look ok on a smartphone (steps top to bottom)
 // [opt] add settings persistence: local storage, url?
 //  -> maybe add an url parameter + chooser pattern so it can be saved
-// make a error message component
 // [opt] More / custom resolutions?
 // -----------------------------------------------------------------
 
