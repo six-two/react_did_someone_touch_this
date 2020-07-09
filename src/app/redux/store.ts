@@ -17,12 +17,15 @@ export interface State {
   settings: {
     imageSource: string,
     screenshotFormat: "png" | "jpeg" | "webp",
-    preferredResolution: {
-      width: number,
-      height: number,
-    },
+    preferredResolution: Resolution,
+    overlayBeforeImage: boolean,
   },
   comparisonType: string,
+}
+
+export interface Resolution {
+  width: number,
+  height: number,
 }
 
 export interface ImageState {
@@ -52,6 +55,7 @@ export const fallbackState: State = {
       width: 1920,
       height: 1080,
     },
+    overlayBeforeImage: true,
   },
   comparisonType: C.COMPARE_AUTOMATIC,
 }

@@ -4,14 +4,13 @@ import StepContent from './StepContentDisplay';
 import '../css/main.scss';
 
 // --------------------------- TODOs -------------------------------
-// let user choose webcam resolution
 // improve instructions
 // why is it so slow on my smartphone? are 3 ~20MB pictures so hard to handle? :p
 // Make it look ok on a smartphone
 // [opt] add settings persistence: local storage, url?
 //  -> maybe add an url parameter + chooser pattern so it can be saved
-// [opt] find out how to use key events?
 // make a error message component
+// [opt] More / custom resolutions?
 // -----------------------------------------------------------------
 
 class MainView extends React.Component {

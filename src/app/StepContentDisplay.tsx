@@ -14,6 +14,7 @@ interface Props {
   beforeImageData: ImageData | null,
   afterImageData: ImageData | null,
   step: number,
+  overlayBeforeImage: boolean,
 }
 
 interface State {
@@ -40,11 +41,13 @@ class StepContentView extends React.Component<Props, State> {
           currentImage={this.props.beforeImageData} />
       case Steps.STEP_BETWEEN_PHOTOS:
         return <BetweenPhotosView beforeImage={this.props.beforeImageData} />
-      case Steps.STEP_AFTER_PHOTO:
+      case Steps.STEP_AFTER_PHOTO:{
+        const bgImg = (this.props.overlayBeforeImage && this.props.beforeImageData) || undefined;
         return <GetImageView
           onImage={setAfterImage}
           currentImage={this.props.afterImageData}
-          backgroundImage={this.props.beforeImageData || undefined} />
+          backgroundImage={bgImg} />
+        }
       case Steps.STEP_COMPARE:
         return <ImageCompareView />
       default:
@@ -68,6 +71,7 @@ const mapStateToProps = (state: ReduxState, ownProps: any) => {
     ...ownProps,
     beforeImageData: state.images.before.data,
     afterImageData: state.images.after.data,
+    overlayBeforeImage: state.settings.overlayBeforeImage,
     step: state.steps.current,
   };
 };

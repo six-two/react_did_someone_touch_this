@@ -1,6 +1,6 @@
 import * as Actions from './actions';
 import * as C from './constants';
-import { State, ImageState, ImageData, fallbackState } from './store';
+import { State, ImageState, ImageData, Resolution, fallbackState } from './store';
 import { getLastAccessibleStepIndex, assertStepInBounds } from '../steps/Steps';
 
 
@@ -29,9 +29,40 @@ function reducer(state: State | undefined, action: Actions.Action): State {
       return handle_setImageSource(state, action);
     }
     case C.SET_COMPARE_TYPE: {
+      const value = action.payload as string;
       return {
         ...state,
-        comparisonType: (action as any).payload,
+        comparisonType: value,
+      }
+    }
+    case C.SET_SCREENSHOT_FORMAT: {
+      const value = action.payload as any;
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          screenshotFormat: value,
+        },
+      }
+    }
+    case C.SET_PREFERRED_RES: {
+      const value = action.payload as Resolution;
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          preferredResolution: value,
+        },
+      }
+    }
+    case C.SET_ENABLE_BEFORE_OVERLAY: {
+      const value = action.payload as boolean;
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          overlayBeforeImage: value,
+        },
       }
     }
     case "@@INIT":

@@ -1,4 +1,4 @@
-import store, { ImageData } from './store';
+import store, { ImageData, Resolution } from './store';
 import * as C from './constants';
 
 
@@ -8,7 +8,7 @@ const d = store.dispatch;
 // actions
 export interface Action {
   type: string,
-  payload: string | number | null | SetImagePayload,
+  payload: string | number | boolean | null | SetImagePayload | Resolution,
 }
 
 export interface SetImagePayload {
@@ -52,4 +52,22 @@ export function goToStep(step: number) {
 
 export function setImageSource(value: string) {
   d({ type: C.SET_IMAGE_SOURCE, payload: value });
+}
+
+export function setScreenshotFormat(value: string) {
+  d({ type: C.SET_SCREENSHOT_FORMAT, payload: value });
+}
+
+export function setPreferredResolution(width: number, height: number) {
+  d({
+    type: C.SET_PREFERRED_RES,
+    payload: {
+      width: width,
+      height: height,
+    },
+  });
+}
+
+export function setEnableBeforeImageOverlay(value: boolean) {
+  d({ type: C.SET_ENABLE_BEFORE_OVERLAY, payload: value });
 }
