@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { State as ReduxState } from './redux/store';
+import { ReduxState } from './redux/store';
 import { goToStep } from './redux/actions';
 import { STEPS, StepData } from './steps/Steps';
 

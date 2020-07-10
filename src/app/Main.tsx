@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import store, { State as ReduxState } from './redux/store';
+import { ReduxState } from './redux/store';
 import InitialScreen from './InitialScreen';
 import StepDisplay from './StepDisplay';
 import StepContent from './StepContentDisplay';

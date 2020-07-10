@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { State as ReduxState } from './redux/store';
+import { ReduxState } from './redux/store';
 import { setImageSource, setScreenshotFormat, setPreferredResolution, setEnableBeforeImageOverlay } from './redux/actions';
 import * as C from './redux/constants';
 import Setting from './Setting';

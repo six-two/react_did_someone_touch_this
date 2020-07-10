@@ -5,7 +5,7 @@ import InstructionView from './steps/Instructions';
 import SettingsView from './SettingsView';
 import GetImageView from './GetImage';
 import BetweenPhotosView from './steps/BetweenStep';
-import { State as ReduxState, ImageData } from './redux/store';
+import { ReduxState, ImageData } from './redux/store';
 import { goToStep, setBeforeImage, setAfterImage } from './redux/actions';
 import * as Steps from './steps/Steps';
 import { BugMessage } from './ErrorMessage';

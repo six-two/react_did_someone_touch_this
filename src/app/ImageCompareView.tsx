@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { State as ReduxState, ImageData } from './redux/store';
+import { ReduxState, ImageData } from './redux/store';
 import { setComparisonType } from './redux/actions';
 import * as C from './redux/constants';
 import AutomaticCompare from './compare-images/AutomaticCompare';

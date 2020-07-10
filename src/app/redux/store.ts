@@ -5,7 +5,7 @@ import { getLastAccessibleStepIndex } from '../steps/Steps';
 
 export type ImageData = string;
 
-export interface State {
+export interface ReduxState {
   images: {
     before: ImageState,
     after: ImageState,
@@ -39,7 +39,7 @@ const DEFAULT_IMAGE_STATE = {
   updateCount: 0,
 };
 
-export const fallbackState: State = {
+export const fallbackState: ReduxState = {
   images: {
     before: DEFAULT_IMAGE_STATE,
     after: DEFAULT_IMAGE_STATE,

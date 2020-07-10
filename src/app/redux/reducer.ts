@@ -1,10 +1,10 @@
 import * as Actions from './actions';
 import * as C from './constants';
-import { State, ImageState, ImageData, Resolution, fallbackState } from './store';
+import { ReduxState, ImageState, ImageData, Resolution, fallbackState } from './store';
 import { getLastAccessibleStepIndex, assertStepInBounds } from '../steps/Steps';
 
 
-function reducer(state: State | undefined, action: Actions.Action): State {
+function reducer(state: ReduxState | undefined, action: Actions.Action): ReduxState {
   if (!state) {
     console.warn("No state was supplied to reducer. Falling back to default values");
     state = fallbackState;
@@ -73,7 +73,7 @@ function reducer(state: State | undefined, action: Actions.Action): State {
   }
 }
 
-function handle_completeStep(state: State): State {
+function handle_completeStep(state: ReduxState): ReduxState {
   let next = state.steps.current + 1;
   if (assertStepInBounds(next)) {
     let completed = getLastAccessibleStepIndex(next);
@@ -91,7 +91,7 @@ function handle_completeStep(state: State): State {
   }
 }
 
-function handle_setImageSource(state: State, action: Actions.Action): State {
+function handle_setImageSource(state: ReduxState, action: Actions.Action): ReduxState {
   let value = action.payload as string;
   return {
     ...state,
@@ -102,7 +102,7 @@ function handle_setImageSource(state: State, action: Actions.Action): State {
   };
 }
 
-function handle_goToStep(state: State, action: Actions.Action): State {
+function handle_goToStep(state: ReduxState, action: Actions.Action): ReduxState {
   let step = action.payload as number;
   if (assertStepInBounds(step) && step <= state.steps.completed) {
     return {
@@ -113,12 +113,12 @@ function handle_goToStep(state: State, action: Actions.Action): State {
       },
     };
   } else {
-    console.warn(`Can not switch to step ${step}. State: ${state.steps}`);
+    console.warn(`Can not switch to step ${step}. ReduxState: ${state.steps}`);
     return state;
   }
 }
 
-function handle_setImage(state: State, action: Actions.Action): State {
+function handle_setImage(state: ReduxState, action: Actions.Action): ReduxState {
   let payload = action.payload as Actions.SetImagePayload;
   let imageStateCopy = { ...state.images };
   switch (payload.imageName) {
