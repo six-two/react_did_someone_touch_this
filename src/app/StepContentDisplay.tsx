@@ -6,7 +6,7 @@ import SettingsView from './SettingsView';
 import GetImageView from './GetImage';
 import BetweenPhotosView from './steps/BetweenStep';
 import { State as ReduxState, ImageData } from './redux/store';
-import { completedCurrentStep, setBeforeImage, setAfterImage } from './redux/actions';
+import { goToStep, setBeforeImage, setAfterImage } from './redux/actions';
 import * as Steps from './steps/Steps';
 import { BugMessage } from './ErrorMessage';
 
@@ -26,6 +26,7 @@ class StepContentView extends React.Component<Props, State> {
     return (
       <div className="step-content">
         {this.renderContents()}
+        {this.renderNextButtonIfPossible()}
       </div>
     );
   }
@@ -33,15 +34,15 @@ class StepContentView extends React.Component<Props, State> {
   renderContents() {
     switch (this.props.step) {
       case Steps.STEP_INTRO:
-        return this.renderWithNextButton(<InstructionView />);
+        return <InstructionView />;
       case Steps.STEP_SETTINGS:
-        return this.renderWithNextButton(<SettingsView />);
+        return <SettingsView />;
       case Steps.STEP_BEFORE_PHOTO:
         return <GetImageView
           onImage={setBeforeImage}
           currentImage={this.props.beforeImageData} />
       case Steps.STEP_BETWEEN_PHOTOS:
-        return this.renderWithNextButton(<BetweenPhotosView beforeImage={this.props.beforeImageData} />)
+        return <BetweenPhotosView beforeImage={this.props.beforeImageData} />
       case Steps.STEP_AFTER_PHOTO: {
         const bgImg = (this.props.overlayBeforeImage && this.props.beforeImageData) || undefined;
         return <GetImageView
@@ -56,13 +57,18 @@ class StepContentView extends React.Component<Props, State> {
     }
   }
 
-  renderWithNextButton(component: any) {
-    return (<div>
-      {component}
-      <button className="next-button" onClick={(e: any) => completedCurrentStep()}>
-        Next step
-      </button>
-    </div>);
+  renderNextButtonIfPossible() {
+    const step = Steps.STEPS[this.props.step];
+    if (step.canSkip) { // only show on skippable steps
+      const nextStep = this.props.step + 1;
+      if (nextStep < Steps.STEPS.length) { // do not show on last step
+        const goToNextStep = (e: any) => goToStep(nextStep);
+        return <button className="next-button" onClick={goToNextStep}>
+          {"Next step"}
+        </button>
+      }
+    }
+    return null;
   }
 }
 
