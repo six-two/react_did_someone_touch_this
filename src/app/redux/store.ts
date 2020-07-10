@@ -45,7 +45,7 @@ export const fallbackState: State = {
     after: DEFAULT_IMAGE_STATE,
   },
   steps: {
-    current: 0,
+    current: -1,
     completed: getLastAccessibleStepIndex(0),
   },
   settings: {

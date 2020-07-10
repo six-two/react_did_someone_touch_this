@@ -1,7 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import store, { State as ReduxState } from './redux/store';
+import InitialScreen from './InitialScreen';
 import StepDisplay from './StepDisplay';
 import StepContent from './StepContentDisplay';
-import { ErrorMessage } from './ErrorMessage';
 import '../css/main.scss';
 
 // --------------------------- TODOs -------------------------------
@@ -12,16 +14,30 @@ import '../css/main.scss';
 // [opt] add settings persistence: local storage, url?
 //  -> maybe add an url parameter + chooser pattern so it can be saved
 // [opt] More / custom resolutions?
+// [opt] Better automatic comparison
 // -----------------------------------------------------------------
 
-export default function MainView() {
-  return <div className="app">
-    <ErrorMessage
-      message="This website is still in development and may be buggy"
-      log={false} />
-    <div className="app-contents">
+function MainView(props: Props) {
+  if (props.step === -1) {
+    return <div className="app">
+      <InitialScreen />
+    </div>
+  } else {
+    return <div className="app">
       <StepDisplay />
       <StepContent />
     </div>
-  </div>
+  }
 }
+
+interface Props {
+  step: number,
+}
+
+const mapStateToProps = (state: ReduxState, ownProps: any) => {
+  return {
+    ...ownProps,
+    step: state.steps.current,
+  };
+};
+export default connect(mapStateToProps)(MainView);

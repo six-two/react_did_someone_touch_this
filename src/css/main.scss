@@ -10,6 +10,10 @@ $medium-screen: "only screen and (min-width: 500px)";
 #root {
   background: eee;
 
+  .app {
+    margin-top: 10px;
+  }
+
   code {
     background-color: lightgray;
     padding: 2px 5px;
