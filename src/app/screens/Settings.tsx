@@ -9,7 +9,7 @@ import Dropdown from '../Dropdown';
 
 const SOURCES = new Map<string, string>();
 SOURCES.set(C.SOURCE_WEBCAM, "Use webcam / camera");
-SOURCES.set(C.SOURCE_FILE, "Upload photos");
+SOURCES.set(C.SOURCE_FILE, "Use local image files");
 
 const IMG_FORMAT = new Map<string, string>();
 IMG_FORMAT.set("png", "PNG");

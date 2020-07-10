@@ -1,6 +1,6 @@
 // Image sources
-export const SOURCE_WEBCAM = "Use webcam";
-export const SOURCE_FILE = "Upload image";
+export const SOURCE_WEBCAM = "SOURCE_WEBCAM";
+export const SOURCE_FILE = "SOURCE_FILE";
 
 // Image IDs
 export const AFTER_IMAGE = "AFTER_IMAGE";
