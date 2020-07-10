@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { State as ReduxState, Resolution } from './redux/store';
+import { State as ReduxState } from './redux/store';
 import { setImageSource, setScreenshotFormat, setPreferredResolution, setEnableBeforeImageOverlay } from './redux/actions';
 import * as C from './redux/constants';
+import Setting from './Setting';
 import Dropdown from './Dropdown';
 
 const SOURCES = new Map<string, string>();
@@ -24,58 +25,61 @@ IMG_SIZE.set("3840x2160", "2160p (4K UHD)");
 interface Props {
   imageSource: string,
   screenshotFormat: string,
-  preferredResolution: Resolution,
+  preferredResolution: string,
   isBeforeOverlayEnabled: boolean,
 }
 
 class SettingsView extends React.Component<Props> {
   render() {
+    const showWebcamSettings = this.props.imageSource === C.SOURCE_WEBCAM;
     return (
       <div className="settings">
         <h2>Settings</h2>
-        <div className="setting">
-          <span className="label">Image source:</span>
+
+        <Setting label="Image source">
           <Dropdown
             optionMap={SOURCES}
             value={this.props.imageSource}
             onValueChange={setImageSource} />
-        </div>
-        {this.props.imageSource === C.SOURCE_WEBCAM &&
-          <div>
-            <div className="setting">
-              <span className="label">Photo format:</span>
-              <Dropdown
-                optionMap={IMG_FORMAT}
-                value={this.props.screenshotFormat}
-                onValueChange={setScreenshotFormat} />
-            </div>
-            <div className="setting">
-              <span className="label">Resolution<abbr title="The browser will request this resolution, but depending on your hardware the actual resolution may differ">*</abbr>:</span>
-              <Dropdown
-                optionMap={IMG_SIZE}
-                value={this.resAsString()}
-                onValueChange={this.onResolutionChange} />
-            </div>
-            <div className="setting">
-              <span className="label">Overlay before image<abbr title="Enabling this option will overlay the image you took before on the camera view, so that you can find the alignment and position that you used before">?</abbr>:</span>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={this.props.isBeforeOverlayEnabled}
-                  onChange={(e: any) => setEnableBeforeImageOverlay(!this.props.isBeforeOverlayEnabled)}
-                />
-              enable
-            </label>
-            </div>
-          </div>
-        }
+        </Setting>
+
+        <Setting label="Photo format"
+          show={showWebcamSettings}>
+          <Dropdown
+            optionMap={IMG_FORMAT}
+            value={this.props.screenshotFormat}
+            onValueChange={setScreenshotFormat} />
+        </Setting>
+
+        <Setting label="Resolution"
+          hint={{
+            trigger: "*",
+            text: "The browser will request this resolution, but depending on your hardware the actual resolution may differ"
+          }}
+          show={showWebcamSettings}>
+          <Dropdown
+            optionMap={IMG_SIZE}
+            value={this.props.preferredResolution}
+            onValueChange={this.onResolutionChange} />
+        </Setting>
+
+        <Setting label="Image overlay"
+          hint={{
+            trigger: "?",
+            text: "Enabling this option will overlay the image you took before on the camera view, so that you can find the alignment and position that you used before"
+          }}
+          show={showWebcamSettings}>
+          <label>
+            <input
+              type="checkbox"
+              checked={this.props.isBeforeOverlayEnabled}
+              onChange={(e: any) => setEnableBeforeImageOverlay(!this.props.isBeforeOverlayEnabled)}
+            />
+            {"help you find the same perspective again"}
+          </label>
+        </Setting>
       </div>
     );
-  }
-
-  resAsString() {
-    const res = this.props.preferredResolution;
-    return `${res.width}x${res.height}`;
   }
 
   onResolutionChange(resString: string) {
@@ -91,11 +95,12 @@ class SettingsView extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: ReduxState, ownProps: any) => {
+  const res = state.settings.preferredResolution;
   return {
     ...ownProps,
     imageSource: state.settings.imageSource,
     screenshotFormat: state.settings.screenshotFormat,
-    preferredResolution: state.settings.preferredResolution,
+    preferredResolution: `${res.width}x${res.height}`,
     isBeforeOverlayEnabled: state.settings.overlayBeforeImage,
   };
 };

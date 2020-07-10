@@ -3,8 +3,10 @@ import store, { ImageData } from './redux/store';
 import { SOURCE_WEBCAM, SOURCE_FILE } from './redux/constants';
 import TakeImageView from './TakeImageView';
 import ImageUpload from './ImageUpload';
+import { BugMessage } from './ErrorMessage';
 import DownloadImageButton from './DownloadImageButton';
 
+const CLASS_NAME = "get-image";
 
 interface Props {
   currentImage: string | null,
@@ -12,38 +14,38 @@ interface Props {
   backgroundImage?: ImageData,
 }
 
-class GetImageView extends React.Component<Props> {
-  render() {
-    return (
-      <div className="get-image">
-        {this.renderContents()}
-      </div>
-    );
+function GetImageView(props: Props) {
+  const imageSource = store.getState().settings.imageSource;
+  switch (imageSource) {
+    case SOURCE_WEBCAM:
+      return TakePhotoView(props);
+    case SOURCE_FILE:
+      return UploadImageView(props);
+    default:
+      return <BugMessage message={`Unknown image source: "${imageSource}"`} />
   }
+}
 
-  renderContents() {
-    const imageSource = store.getState().settings.imageSource;
-    switch (imageSource) {
-      case SOURCE_WEBCAM:
-        return <div>
-          <h2>Take a photo</h2>
-          Allow camera access and touch/click the image below.
-          <TakeImageView onPhoto={this.props.onImage} backgroundImage={this.props.backgroundImage} />
+function TakePhotoView(props: Props) {
+  return <div className={CLASS_NAME}>
+    <h2>Take a photo</h2>
+    Allow camera access and touch/click the image below.
+    <TakeImageView
+      onPhoto={props.onImage}
+      backgroundImage={props.backgroundImage} />
 
-          <DownloadImageButton
-            buttonText="Download last image taken"
-            fileName={`webcam-image`}
-            imageData={this.props.currentImage} />
-        </div>
-      case SOURCE_FILE:
-        return <div>
-          <h2>Upload an image</h2>
-          <ImageUpload setImage={this.props.onImage} />
-        </div>
-      default:
-        throw new Error(`Unknown image source: "${imageSource}"`);
-    };
-  }
+    <DownloadImageButton
+      buttonText="Download last image taken"
+      fileName={`webcam-image`}
+      imageData={props.currentImage} />
+  </div>
+}
+
+function UploadImageView(props: Props) {
+  return <div className={CLASS_NAME}>
+    <h2>Upload an image</h2>
+    <ImageUpload setImage={props.onImage} />
+  </div>
 }
 
 export default GetImageView;

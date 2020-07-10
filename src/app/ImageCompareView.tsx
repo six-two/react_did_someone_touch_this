@@ -26,7 +26,8 @@ class ImageCompareView extends React.Component<Props> {
   render() {
     return <div className="diff-view">
       <h2>Comparison</h2>
-        Type: <Dropdown
+      <span>Type:</span>
+      <Dropdown
         optionMap={TYPES}
         value={this.props.type}
         onValueChange={(x) => setComparisonType(x)} />
@@ -51,7 +52,7 @@ class ImageCompareView extends React.Component<Props> {
       case C.COMPARE_SLIDER_RIGHT_LEFT:
         return <LeftRightSlider beforeImage={before} afterImage={after} />
       default:
-        return <BugMessage message={`Unknown type: ${this.props.type}`} />
+        return <BugMessage message={`Unknown compare type: ${this.props.type}`} />
     }
   }
 }

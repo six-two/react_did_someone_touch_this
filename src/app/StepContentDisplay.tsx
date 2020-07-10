@@ -8,6 +8,7 @@ import BetweenPhotosView from './steps/BetweenStep';
 import { State as ReduxState, ImageData } from './redux/store';
 import { completedCurrentStep, setBeforeImage, setAfterImage } from './redux/actions';
 import * as Steps from './steps/Steps';
+import { BugMessage } from './ErrorMessage';
 
 
 interface Props {
@@ -40,18 +41,18 @@ class StepContentView extends React.Component<Props, State> {
           onImage={setBeforeImage}
           currentImage={this.props.beforeImageData} />
       case Steps.STEP_BETWEEN_PHOTOS:
-        return <BetweenPhotosView beforeImage={this.props.beforeImageData} />
-      case Steps.STEP_AFTER_PHOTO:{
+        return this.renderWithNextButton(<BetweenPhotosView beforeImage={this.props.beforeImageData} />)
+      case Steps.STEP_AFTER_PHOTO: {
         const bgImg = (this.props.overlayBeforeImage && this.props.beforeImageData) || undefined;
         return <GetImageView
           onImage={setAfterImage}
           currentImage={this.props.afterImageData}
           backgroundImage={bgImg} />
-        }
+      }
       case Steps.STEP_COMPARE:
         return <ImageCompareView />
       default:
-        return <span>Error: Unknown step</span>
+        return <BugMessage message={`Unknown step: "${this.props.step}"`} />
     }
   }
 

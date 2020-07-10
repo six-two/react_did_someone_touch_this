@@ -4,9 +4,16 @@ $big-screen: "only screen and (min-width: 768px)";
 @import "webcam";
 @import "settings";
 @import "compare";
+@import "step_content";
 
 #root {
   background: eee;
+
+  code {
+    background-color: lightgray;
+    padding: 2px 5px;
+    border-radius: 4px;
+  }
 
   img {
     width: 100%;
