@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ImageCompareView from './ImageCompareView';
-import InstructionView from './steps/Instructions';
-import SettingsView from './SettingsView';
 import GetImageView from './GetImage';
 import BetweenPhotosView from './steps/BetweenStep';
 import { ReduxState, ImageData } from './redux/store';
@@ -33,10 +31,6 @@ class StepContentView extends React.Component<Props, State> {
 
   renderContents() {
     switch (this.props.step) {
-      case Steps.STEP_INTRO:
-        return <InstructionView />;
-      case Steps.STEP_SETTINGS:
-        return <SettingsView />;
       case Steps.STEP_BEFORE_PHOTO:
         return <GetImageView
           onImage={setBeforeImage}

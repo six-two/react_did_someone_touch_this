@@ -14,8 +14,8 @@ function addStep(name: string, canSkip: boolean = false): number {
   return number;
 }
 
-export const STEP_INTRO = addStep("Intro", true);
-export const STEP_SETTINGS = addStep("Settings", true);
+// export const STEP_INTRO = addStep("Intro", true);
+// export const STEP_SETTINGS = addStep("Settings", true);
 export const STEP_BEFORE_PHOTO = addStep("Before photo");
 export const STEP_BETWEEN_PHOTOS = addStep("Do your thing", true);
 export const STEP_AFTER_PHOTO = addStep("After photo");

@@ -1,9 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { ReduxState } from './redux/store';
-import InitialScreen from './InitialScreen';
+import * as C from './redux/constants';
+import MainMenu from './screens/MainMenu';
+import Instructions from './screens/Instructions';
+import Settings from './screens/Settings';
+import Privacy from './screens/Privacy';
 import StepDisplay from './StepDisplay';
 import StepContent from './StepContentDisplay';
+import { BugMessage } from './ErrorMessage';
 import '../css/main.scss';
 
 // --------------------------- TODOs -------------------------------
@@ -18,26 +23,39 @@ import '../css/main.scss';
 // -----------------------------------------------------------------
 
 function MainView(props: Props) {
-  if (props.step === -1) {
-    return <div className="app">
-      <InitialScreen />
-    </div>
-  } else {
-    return <div className="app">
-      <StepDisplay />
-      <StepContent />
-    </div>
+  return <div className="app">
+    <ScreenManager screen={props.screen} />
+  </div>
+}
+
+function ScreenManager(props: Props) {
+  switch (props.screen) {
+    case C.SCREEN_MENU:
+      return <MainMenu />
+    case C.SCREEN_STEPS:
+      return <div>
+        <StepDisplay />
+        <StepContent />
+      </div>
+    case C.SCREEN_SETTINGS:
+      return <Settings />
+    case C.SCREEN_HOW_IT_WORKS:
+      return <Instructions />
+    case C.SCREEN_PRIVACY:
+      return <Privacy />
+    default:
+      return <BugMessage message={`Unknown screen: "${props.screen}"`} />
   }
 }
 
 interface Props {
-  step: number,
+  screen: string,
 }
 
 const mapStateToProps = (state: ReduxState, ownProps: any) => {
   return {
     ...ownProps,
-    step: state.steps.current,
+    screen: state.screen,
   };
 };
 export default connect(mapStateToProps)(MainView);

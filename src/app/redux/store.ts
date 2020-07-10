@@ -21,6 +21,7 @@ export interface ReduxState {
     overlayBeforeImage: boolean,
   },
   comparisonType: string,
+  screen: string,
 }
 
 export interface Resolution {
@@ -45,7 +46,7 @@ export const fallbackState: ReduxState = {
     after: DEFAULT_IMAGE_STATE,
   },
   steps: {
-    current: -1,
+    current: 0,
     completed: getLastAccessibleStepIndex(0),
   },
   settings: {
@@ -58,6 +59,7 @@ export const fallbackState: ReduxState = {
     overlayBeforeImage: true,
   },
   comparisonType: C.COMPARE_AUTOMATIC,
+  screen: C.SCREEN_MENU,
 }
 
 let devTools = undefined;

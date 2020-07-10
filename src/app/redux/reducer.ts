@@ -10,11 +10,6 @@ function reducer(state: ReduxState | undefined, action: Actions.Action): ReduxSt
     state = fallbackState;
   }
 
-  // state = {
-  //   ...state,
-  //   updateCounter: state.updateCounter + 1,
-  // };
-
   switch (action.type) {
     case C.SET_IMAGE: {
       return handle_setImage(state, action);
@@ -27,6 +22,13 @@ function reducer(state: ReduxState | undefined, action: Actions.Action): ReduxSt
     }
     case C.SET_IMAGE_SOURCE: {
       return handle_setImageSource(state, action);
+    }
+    case C.SET_SCREEN: {
+      const value = action.payload as string;
+      return {
+        ...state,
+        screen: value,
+      }
     }
     case C.SET_COMPARE_TYPE: {
       const value = action.payload as string;

@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { ReduxState } from './redux/store';
-import { setImageSource, setScreenshotFormat, setPreferredResolution, setEnableBeforeImageOverlay } from './redux/actions';
-import * as C from './redux/constants';
-import Setting from './Setting';
-import Dropdown from './Dropdown';
+import { ReduxState } from '../redux/store';
+import { setImageSource, setScreenshotFormat, setPreferredResolution, setEnableBeforeImageOverlay } from '../redux/actions';
+import * as C from '../redux/constants';
+import GoToScreenButton from '../GoToScreenButton';
+import Setting from '../Setting';
+import Dropdown from '../Dropdown';
 
 const SOURCES = new Map<string, string>();
 SOURCES.set(C.SOURCE_WEBCAM, "Use webcam / camera");
@@ -78,6 +79,7 @@ class SettingsView extends React.Component<Props> {
             {"help you find the same perspective again"}
           </label>
         </Setting>
+        <GoToScreenButton label="Back" screen={C.SCREEN_MENU} />
       </div>
     );
   }

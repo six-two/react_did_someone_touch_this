@@ -58,6 +58,10 @@ export function setScreenshotFormat(value: string) {
   d({ type: C.SET_SCREENSHOT_FORMAT, payload: value });
 }
 
+export function setScreen(value: string) {
+  d({ type: C.SET_SCREEN, payload: value });
+}
+
 export function setPreferredResolution(width: number, height: number) {
   d({
     type: C.SET_PREFERRED_RES,
