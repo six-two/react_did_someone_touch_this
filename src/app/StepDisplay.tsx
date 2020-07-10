@@ -12,11 +12,16 @@ interface Props {
 
 class StepDisplay extends React.Component<Props> {
   render() {
-    return (
-      <ul className="step-list">
+    const step = this.props.currentStep;
+    return <div className="step-header">
+      <ul className="list">
         {STEPS.map(this.renderStep)}
       </ul>
-    );
+      <div className="buttons">
+        {this.goToStepButton("Previous", step - 1)}
+        {this.goToStepButton("Next", step + 1)}
+      </div>
+    </div>
   }
 
   renderStep = (step: StepData) => {
@@ -36,7 +41,16 @@ class StepDisplay extends React.Component<Props> {
       {step.name}
     </li>;
   }
+
+  goToStepButton(text: string, step: number) {
+    const canGoThere = Boolean(0 <= step && step <= this.props.lastSelectableStep);
+    const className = canGoThere ? undefined : "disabled";
+    return <button className={className} onClick={(e: any) => goToStep(step)}>
+      {text}
+    </button>
+  }
 }
+
 
 const mapStateToProps = (state: ReduxState, ownProps: any) => {
   return {

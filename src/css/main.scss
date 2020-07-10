@@ -1,4 +1,5 @@
 $big-screen: "only screen and (min-width: 768px)";
+$medium-screen: "only screen and (min-width: 500px)";
 
 @import "step-list";
 @import "webcam";
@@ -53,7 +54,7 @@ $big-screen: "only screen and (min-width: 768px)";
 }
 
 @media #{$big-screen} {
-  .step-content {
+  .app {
     width: 90%;
     margin: 0px auto;
   }

@@ -19,8 +19,9 @@
   @extend %button-style;
 }
 
-.step-list {
-  display: flex;
+
+.step-header .list {
+  display: none;
   padding: 0px;
   margin: 0px auto;
 
@@ -47,13 +48,43 @@
   }
 
   .disabled {
+    display: none;
     color: gray;
     cursor: not-allowed;
   }
 }
 
+.step-header .buttons {
+  display: flex;
+  margin: 0px 10px;
+
+  button {
+    flex: 1;
+    @extend %button-style;
+  }
+
+  .disabled {
+    color: gray;
+    cursor: not-allowed;
+  }
+}
+
+@media #{$medium-screen} {
+  .step-header {
+    .list {
+      display: flex;
+    }
+
+    .buttons {
+      display: none;
+    }
+  }
+}
+
 @media #{$big-screen} {
-  .step-list {
-    width: 90%;
+  .step-header .list {
+    .disabled {
+      display: block;
+    }
   }
 }
