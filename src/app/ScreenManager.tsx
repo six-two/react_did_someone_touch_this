@@ -9,26 +9,7 @@ import Privacy from './screens/Privacy';
 import StepDisplay from './StepDisplay';
 import StepContent from './StepContentDisplay';
 import { BugMessage } from './ErrorMessage';
-import '../css/main.scss';
 
-// --------------------------- TODOs -------------------------------
-// Remove between step when using local files
-// Show preview of local image files
-// Check file upload to verify it is a valid image
-// improve instructions
-// why is it so slow on my smartphone? are 3 ~20MB pictures so hard to handle? :p
-// [WIP] Make it look ok on a smartphone
-// [opt] add settings persistence: local storage, url?
-//  -> maybe add an url parameter + chooser pattern so it can be saved
-// [opt] More / custom resolutions?
-// [opt] Better automatic comparison
-// -----------------------------------------------------------------
-
-function MainView(props: Props) {
-  return <div className="app">
-    <ScreenManager screen={props.screen} />
-  </div>
-}
 
 function ScreenManager(props: Props) {
   switch (props.screen) {
@@ -60,4 +41,4 @@ const mapStateToProps = (state: ReduxState, ownProps: any) => {
     screen: state.screen,
   };
 };
-export default connect(mapStateToProps)(MainView);
+export default connect(mapStateToProps)(ScreenManager);
