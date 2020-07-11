@@ -1,11 +1,20 @@
+$button-fg: #444;
+$button-bg: white;
+
 %button-style {
   padding: 15px 5px;
   margin: 0px 5px;
-  border: 2px solid black;
+  border: 2px solid $button-fg;
   border-radius: 10px;
   text-align: center;
+  background-color: $button-bg;
   color: black;
   font-size: 25px;
+
+  &:hover {
+    background-color: $button-fg;
+    color: $button-bg;
+  }
 
   @media #{$medium-screen} {
     font-size: 20px;
