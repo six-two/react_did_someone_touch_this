@@ -29,3 +29,9 @@ export const SCREEN_STEPS = "SCREEN_STEPS";
 export const SCREEN_SETTINGS = "SCREEN_SETTINGS";
 export const SCREEN_HOW_IT_WORKS = "SCREEN_HOW_IT_WORKS";
 export const SCREEN_PRIVACY = "SCREEN_PRIVACY";
+
+//steps
+export const STEP_BEFORE_PHOTO = "Before photo";
+export const STEP_BETWEEN_PHOTOS = "Do your thing";
+export const STEP_AFTER_PHOTO = "After photo";
+export const STEP_COMPARE = "Compare photos";

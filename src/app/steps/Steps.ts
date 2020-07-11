@@ -1,3 +1,4 @@
+import * as C from '../redux/constants';
 
 export interface StepData {
   number: number,
@@ -14,44 +15,49 @@ function addStep(name: string, canSkip: boolean = false): number {
   return number;
 }
 
-// export const STEP_INTRO = addStep("Intro", true);
-// export const STEP_SETTINGS = addStep("Settings", true);
-export const STEP_BEFORE_PHOTO = addStep("Before photo");
-export const STEP_BETWEEN_PHOTOS = addStep("Do your thing", true);
-export const STEP_AFTER_PHOTO = addStep("After photo");
-export const STEP_COMPARE = addStep("Compare photos");
+addStep(C.STEP_BEFORE_PHOTO);
+addStep(C.STEP_BETWEEN_PHOTOS, true);
+addStep(C.STEP_AFTER_PHOTO);
+addStep(C.STEP_COMPARE);
 
-export const STEPS = steps;
+export const STEPS_CAM = steps;
+
+steps = [];
+addStep(C.STEP_BEFORE_PHOTO);
+addStep(C.STEP_AFTER_PHOTO);
+addStep(C.STEP_COMPARE);
+
+export const STEPS_FILE = steps;
 // console.debug(steps);
 
-export function assertStepInBounds(step: number, throwError: boolean = false): boolean {
-  let isInBounds = step >= 0 && step < STEPS.length;
+export function assertStepInBounds(steps: StepData[], step: number, throwError: boolean = false): boolean {
+  let isInBounds = step >= 0 && step < steps.length;
   if (throwError && !isInBounds) {
     throw new Error(`Step is not in bounds: ${step}`);
   }
   return isInBounds;
 }
 
-export function getLastAccessibleStepIndex(completedSteps: number) {
-  assertStepInBounds(completedSteps, true);//throw error if not in bounds
+export function getLastAccessibleStepIndex(steps: StepData[], completedSteps: number) {
+  assertStepInBounds(steps, completedSteps, true);//throw error if not in bounds
 
-  for (let i = completedSteps; i < STEPS.length; i++) {
-    if (!STEPS[i].canSkip) {
+  for (let i = completedSteps; i < steps.length; i++) {
+    if (!steps[i].canSkip) {
       // Return the first following non-skippable step
       return i;
     }
   }
-  return STEPS.length - 1;
+  return steps.length - 1;
 }
 
-export function canAccessStep(step: number, completedSteps: number): boolean {
-  assertStepInBounds(step, true);
-  assertStepInBounds(completedSteps, true);
+export function canAccessStep(steps: StepData[], step: number, completedSteps: number): boolean {
+  assertStepInBounds(steps, step, true);
+  assertStepInBounds(steps, completedSteps, true);
 
   if (step <= completedSteps) {
     // save time calculating stuff
     return true;
   } else {
-    return step <= getLastAccessibleStepIndex(completedSteps);
+    return step <= getLastAccessibleStepIndex(steps, completedSteps);
   }
 }

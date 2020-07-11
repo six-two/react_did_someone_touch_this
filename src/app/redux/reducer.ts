@@ -1,7 +1,7 @@
 import * as Actions from './actions';
 import * as C from './constants';
 import { ReduxState, ImageState, ImageData, Resolution, fallbackState } from './store';
-import { getLastAccessibleStepIndex, assertStepInBounds } from '../steps/Steps';
+import { getLastAccessibleStepIndex, assertStepInBounds, STEPS_CAM, STEPS_FILE } from '../steps/Steps';
 
 
 function reducer(state: ReduxState | undefined, action: Actions.Action): ReduxState {
@@ -25,6 +25,16 @@ function reducer(state: ReduxState | undefined, action: Actions.Action): ReduxSt
     }
     case C.SET_SCREEN: {
       const value = action.payload as string;
+      if (value === C.SCREEN_STEPS) {
+        const useCam = state.settings.imageSource === C.SOURCE_WEBCAM;
+        state = {
+          ...state,
+          steps: {
+            ...state.steps,
+            list: useCam ? STEPS_CAM : STEPS_FILE,
+          },
+        }
+      }
       return {
         ...state,
         screen: value,
@@ -77,13 +87,14 @@ function reducer(state: ReduxState | undefined, action: Actions.Action): ReduxSt
 
 function handle_completeStep(state: ReduxState): ReduxState {
   let next = state.steps.current + 1;
-  if (assertStepInBounds(next)) {
-    let completed = getLastAccessibleStepIndex(next);
+  if (assertStepInBounds(state.steps.list, next)) {
+    let completed = getLastAccessibleStepIndex(state.steps.list, next);
     // handle cases where the user went back
     completed = Math.max(state.steps.completed, completed);
     return {
       ...state,
       steps: {
+        ...state.steps,
         current: next,
         completed: completed,
       },
@@ -106,7 +117,7 @@ function handle_setImageSource(state: ReduxState, action: Actions.Action): Redux
 
 function handle_goToStep(state: ReduxState, action: Actions.Action): ReduxState {
   let step = action.payload as number;
-  if (assertStepInBounds(step) && step <= state.steps.completed) {
+  if (assertStepInBounds(state.steps.list, step) && step <= state.steps.completed) {
     return {
       ...state,
       steps: {

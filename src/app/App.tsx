@@ -3,9 +3,6 @@ import ScreenManager from './ScreenManager';
 import '../css/main.scss';
 
 // --------------------------- TODOs -------------------------------
-// Remove between step when using local files
-// Show preview of local image files
-// Check file upload to verify it is a valid image
 // improve instructions
 // why is it so slow on my smartphone? are 3 ~20MB pictures so hard to handle? :p
 // [WIP] Make it look ok on a smartphone

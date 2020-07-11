@@ -5,8 +5,9 @@ import GetImageView from './GetImage';
 import BetweenPhotosView from './steps/BetweenStep';
 import { ReduxState, ImageData } from './redux/store';
 import { goToStep, setBeforeImage, setAfterImage } from './redux/actions';
-import * as Steps from './steps/Steps';
+import * as C from './redux/constants';
 import { BugMessage } from './ErrorMessage';
+import { StepData } from './steps/Steps';
 
 
 interface Props {
@@ -14,6 +15,7 @@ interface Props {
   afterImageData: ImageData | null,
   step: number,
   overlayBeforeImage: boolean,
+  stepList: StepData[],
 }
 
 interface State {
@@ -30,32 +32,34 @@ class StepContentView extends React.Component<Props, State> {
   }
 
   renderContents() {
-    switch (this.props.step) {
-      case Steps.STEP_BEFORE_PHOTO:
+    const step = this.props.stepList[this.props.step].name;
+    switch (step) {
+      case C.STEP_BEFORE_PHOTO:
         return <GetImageView
           onImage={setBeforeImage}
           currentImage={this.props.beforeImageData} />
-      case Steps.STEP_BETWEEN_PHOTOS:
+      case C.STEP_BETWEEN_PHOTOS:
         return <BetweenPhotosView beforeImage={this.props.beforeImageData} />
-      case Steps.STEP_AFTER_PHOTO: {
+      case C.STEP_AFTER_PHOTO: {
         const bgImg = (this.props.overlayBeforeImage && this.props.beforeImageData) || undefined;
         return <GetImageView
           onImage={setAfterImage}
           currentImage={this.props.afterImageData}
           backgroundImage={bgImg} />
       }
-      case Steps.STEP_COMPARE:
+      case C.STEP_COMPARE:
         return <ImageCompareView />
       default:
-        return <BugMessage message={`Unknown step: "${this.props.step}"`} />
+        return <BugMessage message={`Unknown step: "${step}"`} />
     }
   }
 
   renderNextButtonIfPossible() {
-    const step = Steps.STEPS[this.props.step];
+    const steps = this.props.stepList;
+    const step = steps[this.props.step];
     if (step.canSkip) { // only show on skippable steps
       const nextStep = this.props.step + 1;
-      if (nextStep < Steps.STEPS.length) { // do not show on last step
+      if (nextStep < steps.length) { // do not show on last step
         const goToNextStep = (e: any) => goToStep(nextStep);
         return <button className="next-button" onClick={goToNextStep}>
           {"Next step"}
@@ -74,6 +78,7 @@ const mapStateToProps = (state: ReduxState, ownProps: any) => {
     afterImageData: state.images.after.data,
     overlayBeforeImage: state.settings.overlayBeforeImage,
     step: state.steps.current,
+    stepList: state.steps.list,
   };
 };
 

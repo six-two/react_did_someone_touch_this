@@ -2,12 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { ReduxState } from './redux/store';
 import { goToStep } from './redux/actions';
-import { STEPS, StepData } from './steps/Steps';
+import { StepData } from './steps/Steps';
 
 
 interface Props {
   lastSelectableStep: number,
   currentStep: number,
+  stepList: StepData[],
 }
 
 class StepDisplay extends React.Component<Props> {
@@ -15,7 +16,7 @@ class StepDisplay extends React.Component<Props> {
     const step = this.props.currentStep;
     return <div className="step-header">
       <ul className="list">
-        {STEPS.map(this.renderStep)}
+        {this.props.stepList.map(this.renderStep)}
       </ul>
       <div className="buttons">
         {this.goToStepButton("Previous", step - 1)}
@@ -57,6 +58,7 @@ const mapStateToProps = (state: ReduxState, ownProps: any) => {
     ...ownProps,
     lastSelectableStep: state.steps.completed,
     currentStep: state.steps.current,
+    stepList: state.steps.list,
   };
 };
 export default connect(mapStateToProps)(StepDisplay);

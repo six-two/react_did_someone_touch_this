@@ -1,7 +1,7 @@
 import { createStore } from 'redux';
 import reducer from './reducer';
 import * as C from './constants';
-import { getLastAccessibleStepIndex } from '../steps/Steps';
+import { StepData, STEPS_CAM, STEPS_FILE } from '../steps/Steps';
 
 export type ImageData = string;
 
@@ -13,6 +13,7 @@ export interface ReduxState {
   steps: {
     current: number,
     completed: number,
+    list: StepData[],
   },
   settings: {
     imageSource: string,
@@ -47,10 +48,11 @@ export const fallbackState: ReduxState = {
   },
   steps: {
     current: 0,
-    completed: getLastAccessibleStepIndex(0),
+    completed: 0,
+    list: [],
   },
   settings: {
-    imageSource: C.SOURCE_FILE,//DBG
+    imageSource: C.SOURCE_WEBCAM,
     screenshotFormat: "png",
     preferredResolution: {
       width: 1920,
@@ -58,7 +60,7 @@ export const fallbackState: ReduxState = {
     },
     overlayBeforeImage: true,
   },
-  comparisonType: C.COMPARE_AUTOMATIC,
+  comparisonType: C.COMPARE_SLIDER_RIGHT_LEFT,
   screen: C.SCREEN_MENU,
 }
 
