@@ -7,3 +7,11 @@
     margin-top: 30px;
   }
 }
+
+.image-upload {
+  .file-select {
+    input {
+      display: none;
+    }
+  }
+}

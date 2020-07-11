@@ -44,7 +44,9 @@ function TakePhotoView(props: Props) {
 function UploadImageView(props: Props) {
   return <div className={CLASS_NAME}>
     <h2>Select an image</h2>
-    <ImageUpload setImage={props.onImage} />
+    <ImageUpload
+      image={props.currentImage}
+      setImage={props.onImage} />
   </div>
 }
 

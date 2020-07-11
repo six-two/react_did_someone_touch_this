@@ -50,7 +50,7 @@ export const fallbackState: ReduxState = {
     completed: getLastAccessibleStepIndex(0),
   },
   settings: {
-    imageSource: C.SOURCE_WEBCAM,
+    imageSource: C.SOURCE_FILE,//DBG
     screenshotFormat: "png",
     preferredResolution: {
       width: 1920,
