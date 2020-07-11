@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { ReduxState, ImageData } from './redux/store';
-import { setComparisonType } from './redux/actions';
-import * as C from './redux/constants';
-import AutomaticCompare from './compare-images/AutomaticCompare';
-import LeftRightSlider from './compare-images/LeftRightSlider';
-import CrossfadeCompare from './compare-images/CrossfadeCompare';
-import Dropdown from './Dropdown';
-import { BugMessage } from './ErrorMessage';
+import { ReduxState, ImageData } from '../redux/store';
+import { setComparisonType } from '../redux/actions';
+import * as C from '../redux/constants';
+import AutomaticCompare from '../compare-images/AutomaticCompare';
+import LeftRightSlider from '../compare-images/LeftRightSlider';
+import CrossfadeCompare from '../compare-images/CrossfadeCompare';
+import Dropdown from '../Dropdown';
+import { BugMessage } from '../ErrorMessage';
 
 const TYPES = new Map<string, string>();
 TYPES.set(C.COMPARE_AUTOMATIC, "Automatic");
@@ -25,12 +25,13 @@ interface Props {
 class ImageCompareView extends React.Component<Props> {
   render() {
     return <div className="diff-view">
-      <h2>Comparison</h2>
-      <span>Type:</span>
-      <Dropdown
-        optionMap={TYPES}
-        value={this.props.type}
-        onValueChange={(x) => setComparisonType(x)} />
+      <div className="type-chooser">
+        <span>Comparison method: </span>
+        <Dropdown
+          optionMap={TYPES}
+          value={this.props.type}
+          onValueChange={(x) => setComparisonType(x)} />
+      </div>
       {this.renderContents()}
     </div>
   }

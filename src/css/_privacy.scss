@@ -24,6 +24,12 @@ blockquote {
   h1, h2 {
     text-align: center;
   }
+}
+
+.screen-privacy, .screen-instructions, .screen-settings {
+  h1 {
+    text-align: center;
+  }
 
   @media #{$big-screen} {
     width: 600px;

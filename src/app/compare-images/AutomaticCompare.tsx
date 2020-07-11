@@ -2,6 +2,7 @@ import React from 'react';
 import { compare } from 'resemblejs';
 import { ImageData } from '../redux/store';
 import DownloadImageButton from '../DownloadImageButton';
+import { ErrorMessage } from '../ErrorMessage';
 
 
 interface Props {
@@ -25,12 +26,16 @@ export default class AutomaticCompare extends React.Component<Props, State> {
 
   render() {
     if (this.state.errorMessage) {
-      return <div>{this.state.errorMessage}</div>
+      return <ErrorMessage message={this.state.errorMessage} />
     }
 
     if (this.state.diffImage) {
       return <div className="diff-view">
-        <img src={this.state.diffImage} alt="Differences between the before and after pictures" />
+        <div className="instructions">
+          Differences between the images are marked in pink.
+          If almost everything is maked pink, choose a different method to do a manual comparison.
+        </div>
+        <img src={this.state.diffImage} alt="" />
         <DownloadImageButton
           buttonText="Download comparison image"
           fileName="before-after-compare"
@@ -49,7 +54,6 @@ export default class AutomaticCompare extends React.Component<Props, State> {
       const options = {
         output: {
           errorType: "movementDifferenceIntensity",
-          // transparency: 0.7, // this makes the downloaded image transparent
           largeImageThreshold: 1500,
           useCrossOrigin: false,
           outputDiff: true

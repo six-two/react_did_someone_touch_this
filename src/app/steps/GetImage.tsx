@@ -1,12 +1,12 @@
 import React from 'react';
-import store, { ImageData } from './redux/store';
-import { SOURCE_WEBCAM, SOURCE_FILE } from './redux/constants';
-import TakeImageView from './TakeImageView';
-import ImageUpload from './ImageUpload';
-import { BugMessage } from './ErrorMessage';
-import DownloadImageButton from './DownloadImageButton';
+import store, { ImageData } from '../redux/store';
+import { SOURCE_WEBCAM, SOURCE_FILE } from '../redux/constants';
+import TakeImageView from '../TakeImageView';
+import ImageUpload from '../ImageUpload';
+import { BugMessage } from '../ErrorMessage';
+import DownloadImageButton from '../DownloadImageButton';
 
-const CLASS_NAME = "get-image";
+const CLASS_NAME = "step-get-image";
 
 interface Props {
   currentImage: string | null,
@@ -29,7 +29,9 @@ function GetImageView(props: Props) {
 function TakePhotoView(props: Props) {
   return <div className={CLASS_NAME}>
     <h2>Take a photo</h2>
-    Allow camera access and touch/click the image below.
+    <div className="instructions">
+      First allow this website access to your camera. Then touch/click the image below to take a photo.
+    </div>
     <TakeImageView
       onPhoto={props.onImage}
       backgroundImage={props.backgroundImage} />

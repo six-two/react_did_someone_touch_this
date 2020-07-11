@@ -1,13 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import ImageCompareView from './ImageCompareView';
-import GetImageView from './GetImage';
-import BetweenPhotosView from './steps/BetweenStep';
-import { ReduxState, ImageData } from './redux/store';
-import { goToStep, setBeforeImage, setAfterImage } from './redux/actions';
-import * as C from './redux/constants';
-import { BugMessage } from './ErrorMessage';
-import { StepData } from './steps/Steps';
+import { ReduxState, ImageData } from '../redux/store';
+import { goToStep, setBeforeImage, setAfterImage } from '../redux/actions';
+import * as C from '../redux/constants';
+import { BugMessage } from '../ErrorMessage';
+import { StepData } from '../steps/Steps';
+import BetweenPhotosView from '../steps/BetweenStep';
+import ImageCompareView from '../steps/ImageCompareView';
+import GetImageView from '../steps/GetImage';
+import StepListView from '../StepListView';
 
 
 interface Props {
@@ -23,12 +24,13 @@ interface State {
 
 class StepContentView extends React.Component<Props, State> {
   render() {
-    return (
+    return <div>
+      <StepListView />
       <div className="step-content">
         {this.renderContents()}
-        {this.renderNextButtonIfPossible()}
       </div>
-    );
+      {this.renderNextButtonIfPossible()}
+    </div>
   }
 
   renderContents() {

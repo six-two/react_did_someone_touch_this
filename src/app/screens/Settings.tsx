@@ -34,8 +34,8 @@ class SettingsView extends React.Component<Props> {
   render() {
     const showWebcamSettings = this.props.imageSource === C.SOURCE_WEBCAM;
     return (
-      <div className="settings">
-        <h2>Settings</h2>
+      <div className="screen-settings">
+        <h1>Settings</h1>
 
         <Setting label="Image source">
           <Dropdown

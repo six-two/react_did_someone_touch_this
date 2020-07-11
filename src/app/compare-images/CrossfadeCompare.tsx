@@ -14,6 +14,9 @@ export default class CrossfadeCompare extends React.Component<Props, State> {
 
   render() {
     return <div className="img-diff crossfade">
+      <div className="instructions">
+        Move the slider around to compare the images.
+      </div>
       <div className="slider-div">
         <span>Before</span>
         <MySlider

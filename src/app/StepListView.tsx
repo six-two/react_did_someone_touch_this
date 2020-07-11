@@ -11,7 +11,7 @@ interface Props {
   stepList: StepData[],
 }
 
-class StepDisplay extends React.Component<Props> {
+class StepListView extends React.Component<Props> {
   render() {
     const step = this.props.currentStep;
     return <div className="step-header">
@@ -61,4 +61,4 @@ const mapStateToProps = (state: ReduxState, ownProps: any) => {
     stepList: state.steps.list,
   };
 };
-export default connect(mapStateToProps)(StepDisplay);
+export default connect(mapStateToProps)(StepListView);

@@ -6,8 +6,7 @@ import MainMenu from './screens/MainMenu';
 import Instructions from './screens/Instructions';
 import Settings from './screens/Settings';
 import Privacy from './screens/Privacy';
-import StepDisplay from './StepDisplay';
-import StepContent from './StepContentDisplay';
+import StepContent from './screens/Steps';
 import { BugMessage } from './ErrorMessage';
 
 
@@ -16,10 +15,7 @@ function ScreenManager(props: Props) {
     case C.SCREEN_MENU:
       return <MainMenu />
     case C.SCREEN_STEPS:
-      return <div>
-        <StepDisplay />
-        <StepContent />
-      </div>
+      return <StepContent />
     case C.SCREEN_SETTINGS:
       return <Settings />
     case C.SCREEN_HOW_IT_WORKS:

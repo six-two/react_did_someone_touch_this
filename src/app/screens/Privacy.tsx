@@ -5,7 +5,6 @@ import GoToScreenButton from '../GoToScreenButton';
 export default function PrivacyPolicy() {
   return <div className="screen-privacy">
     <h1>Privacy policy</h1>
-    <h2>Data collection</h2>
     <p>
       <span className="bold">I do not collect any information about you. </span>
       This app is designed to work locally and to never send any data to any servers.

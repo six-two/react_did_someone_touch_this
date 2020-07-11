@@ -3,7 +3,7 @@ import ReactCompareImage from 'react-compare-image';
 
 export default function LeftRightSlider(props: Props) {
   return <div className="image-diff left-right-slider">
-    <div className="text">
+    <div className="instructions">
       Move the slider around to compare the images.
     </div>
     <ReactCompareImage
