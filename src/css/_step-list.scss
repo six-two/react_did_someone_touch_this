@@ -5,14 +5,20 @@
   border-radius: 10px;
   text-align: center;
   color: black;
+  font-size: 25px;
+
+  @media #{$medium-screen} {
+    font-size: 20px;
+  }
 
   @media #{$big-screen} {
     padding: 5px 5px;
     margin: 0px 15px;
+    font-size: 15px;
   }
 }
 
-.next-button, .button, .download-button {
+.button, button {
   display: block;
   width: 200px;
   margin: 30px auto 15px auto;

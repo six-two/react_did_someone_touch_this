@@ -26,7 +26,7 @@ export default function DownloadImageButton(props: Props) {
     fileName += "." + detectImageFormat(props.imageData);
   }
 
-  return <a className="download-button"
+  return <a className="button"
     href={props.imageData}
     download={fileName}>
     {props.buttonText}

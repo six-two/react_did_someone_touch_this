@@ -6,15 +6,21 @@ $medium-screen: "only screen and (min-width: 500px)";
 @import "settings";
 @import "compare";
 @import "step_content";
+@import "privacy";
 
 #root {
   background: eee;
 
   .app {
-    margin-top: 10px;
+    margin: 10px 5px;
+
+    @media #{$big-screen} {
+      width: 90%;
+      margin: 10px auto;
+    }
   }
 
-  code {
+  code, .code {
     background-color: lightgray;
     padding: 2px 5px;
     border-radius: 4px;
@@ -54,12 +60,5 @@ $medium-screen: "only screen and (min-width: 500px)";
       top: 0;
       left: 0;
     }
-  }
-}
-
-@media #{$big-screen} {
-  .app {
-    width: 90%;
-    margin: 0px auto;
   }
 }

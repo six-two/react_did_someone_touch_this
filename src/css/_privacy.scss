@@ -1,0 +1,32 @@
+$quote-color: gray;
+
+blockquote {
+  margin-left: 20px;
+  padding-left: 15px;
+  border-left: 3px solid $quote-color;
+  font-style: italic;
+
+  &:before, &:after {
+    font-family: 'Sanchez';
+    color: $quote-color;
+   }
+   &:before {
+     content: '\201C';
+   }
+   &:after {
+      content: '\201D';
+   }
+}
+
+.screen-privacy {
+  text-align: justify;
+
+  h1, h2 {
+    text-align: center;
+  }
+
+  @media #{$big-screen} {
+    width: 600px;
+    margin: auto;
+  }
+}

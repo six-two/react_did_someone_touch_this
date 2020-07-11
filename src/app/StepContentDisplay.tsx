@@ -61,7 +61,7 @@ class StepContentView extends React.Component<Props, State> {
       const nextStep = this.props.step + 1;
       if (nextStep < steps.length) { // do not show on last step
         const goToNextStep = (e: any) => goToStep(nextStep);
-        return <button className="next-button" onClick={goToNextStep}>
+        return <button className="button" onClick={goToNextStep}>
           {"Next step"}
         </button>
       }
