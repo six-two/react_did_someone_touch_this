@@ -8,7 +8,6 @@ interface Props {
 }
 
 interface State {
-  chooseNewImage: boolean,
   hasError: boolean,
 }
 
@@ -16,19 +15,12 @@ class ImageUrlUploader extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      chooseNewImage: false,
       hasError: false,
     }
   }
 
   render() {
-    if (this.props.image && !this.state.chooseNewImage) {
-      const chooseNewImage = (e: any) => {
-        this.setState({
-          chooseNewImage: true,
-          hasError: false,
-        });
-      };
+    if (this.props.image) {
       return <div className="image-upload">
         <img src={this.props.image} alt="" />
         {this.renderFileInputButton("Use a different image")}
@@ -53,7 +45,6 @@ class ImageUrlUploader extends React.Component<Props, State> {
 
   onError = () => {
     this.setState({
-      chooseNewImage: true,
       hasError: true,
     });
   }

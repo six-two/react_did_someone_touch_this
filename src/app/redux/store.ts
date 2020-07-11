@@ -1,7 +1,7 @@
 import { createStore } from 'redux';
 import reducer from './reducer';
 import * as C from './constants';
-import { StepData, STEPS_CAM, STEPS_FILE } from '../steps/Steps';
+import { StepData } from '../steps/Steps';
 
 export type ImageData = string;
 
