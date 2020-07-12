@@ -1,82 +1,34 @@
-import * as Actions from './actions';
+import { Action, SetImagePayload } from './actions';
 import * as C from './constants';
 import { ReduxState, ImageState, ImageData, Resolution, fallbackState } from './store';
 import { getLastAccessibleStepIndex, assertStepInBounds, STEPS_CAM, STEPS_FILE } from '../steps/Steps';
 
 
-function reducer(state: ReduxState | undefined, action: Actions.Action): ReduxState {
+export default function reducer(state: ReduxState | undefined, action: Action): ReduxState {
   if (!state) {
     console.warn("No state was supplied to reducer. Falling back to default values");
     state = fallbackState;
   }
 
   switch (action.type) {
-    case C.SET_IMAGE: {
-      return handle_setImage(state, action);
-    }
-    case C.COMPLETE_STEP: {
-      return handle_completeStep(state);
-    }
-    case C.GO_TO_STEP: {
-      return handle_goToStep(state, action);
-    }
-    case C.SET_IMAGE_SOURCE: {
-      return handle_setImageSource(state, action);
-    }
-    case C.SET_SCREEN: {
-      const value = action.payload as string;
-      if (value === C.SCREEN_STEPS) {
-        const useCam = state.settings.imageSource === C.SOURCE_WEBCAM;
-        state = {
-          ...state,
-          steps: {
-            ...state.steps,
-            list: useCam ? STEPS_CAM : STEPS_FILE,
-          },
-        }
-      }
-      return {
-        ...state,
-        screen: value,
-      }
-    }
-    case C.SET_COMPARE_TYPE: {
-      const value = action.payload as string;
-      return {
-        ...state,
-        comparisonType: value,
-      }
-    }
-    case C.SET_SCREENSHOT_FORMAT: {
-      const value = action.payload as any;
-      return {
-        ...state,
-        settings: {
-          ...state.settings,
-          screenshotFormat: value,
-        },
-      }
-    }
-    case C.SET_PREFERRED_RES: {
-      const value = action.payload as Resolution;
-      return {
-        ...state,
-        settings: {
-          ...state.settings,
-          preferredResolution: value,
-        },
-      }
-    }
-    case C.SET_ENABLE_BEFORE_OVERLAY: {
-      const value = action.payload as boolean;
-      return {
-        ...state,
-        settings: {
-          ...state.settings,
-          overlayBeforeImage: value,
-        },
-      }
-    }
+    case C.SET_IMAGE:
+      return setImage(state, action.payload as SetImagePayload);
+    case C.COMPLETE_STEP:
+      return completeStep(state);
+    case C.GO_TO_STEP:
+      return goToStep(state, action.payload as number);
+    case C.SET_IMAGE_SOURCE:
+      return setImageSource(state, action.payload as string);
+    case C.SET_SCREEN:
+      return setScreen(state, action.payload as string);
+    case C.SET_COMPARE_TYPE:
+      return setCompareType(state, action.payload as string);
+    case C.SET_SCREENSHOT_FORMAT:
+      return setScreenshotFormat(state, action.payload as string);
+    case C.SET_PREFERRED_RES:
+      return setPreferredResolution(state, action.payload as Resolution);
+    case C.SET_ENABLE_BEFORE_OVERLAY:
+      return setOverlay(state, action.payload as boolean);
     case "@@INIT":
       return state;
     default:
@@ -85,7 +37,81 @@ function reducer(state: ReduxState | undefined, action: Actions.Action): ReduxSt
   }
 }
 
-function handle_completeStep(state: ReduxState): ReduxState {
+function parseCustomResolution(state: ReduxState): ReduxState {
+  const searchParams = new URLSearchParams(window.location.search);
+  const cRes = searchParams.get("res");
+  if (cRes) {
+    console.info(`URL contains custom resolution: "${cRes}"`)
+    try {
+      const split = cRes.split("x", 2);
+      const res = {
+        width: Number(split[0]),
+        height: Number(split[1]),
+      };
+      return setPreferredResolution(state, res);
+    } catch (e) {
+      console.error("Error parsing custom resolution: ", e);
+    }
+  }
+  return state;
+}
+
+function setCompareType(state: ReduxState, value: string): ReduxState {
+  return {
+    ...state,
+    comparisonType: value,
+  };
+}
+
+function setScreenshotFormat(state: ReduxState, value: string): ReduxState {
+  return {
+    ...state,
+    settings: {
+      ...state.settings,
+      screenshotFormat: value as any,
+    },
+  };
+}
+
+function setOverlay(state: ReduxState, value: boolean): ReduxState {
+  return {
+    ...state,
+    settings: {
+      ...state.settings,
+      overlayBeforeImage: value,
+    },
+  };
+}
+
+function setPreferredResolution(state: ReduxState, value: Resolution): ReduxState {
+  return {
+    ...state,
+    settings: {
+      ...state.settings,
+      preferredResolution: value,
+    },
+  };
+}
+
+function setScreen(state: ReduxState, value: string): ReduxState {
+  if (value === C.SCREEN_STEPS) {
+    const useCam = state.settings.imageSource === C.SOURCE_WEBCAM;
+    state = {
+      ...state,
+      steps: {
+        ...state.steps,
+        list: useCam ? STEPS_CAM : STEPS_FILE,
+      },
+    }
+    state = parseCustomResolution(state);
+  }
+  return {
+    ...state,
+    screen: value,
+  };
+}
+
+function completeStep(state: ReduxState): ReduxState {
   let next = state.steps.current + 1;
   if (assertStepInBounds(state.steps.list, next)) {
     let completed = getLastAccessibleStepIndex(state.steps.list, next);
@@ -98,14 +124,13 @@ function handle_completeStep(state: ReduxState): ReduxState {
         current: next,
         completed: completed,
       },
-    }
+    };
   } else {
     return state;
   }
 }
 
-function handle_setImageSource(state: ReduxState, action: Actions.Action): ReduxState {
-  let value = action.payload as string;
+function setImageSource(state: ReduxState, value: string): ReduxState {
   return {
     ...state,
     settings: {
@@ -115,24 +140,22 @@ function handle_setImageSource(state: ReduxState, action: Actions.Action): Redux
   };
 }
 
-function handle_goToStep(state: ReduxState, action: Actions.Action): ReduxState {
-  let step = action.payload as number;
-  if (assertStepInBounds(state.steps.list, step) && step <= state.steps.completed) {
+function goToStep(state: ReduxState, value: number): ReduxState {
+  if (assertStepInBounds(state.steps.list, value) && value <= state.steps.completed) {
     return {
       ...state,
       steps: {
         ...state.steps,
-        current: step,
+        current: value,
       },
     };
   } else {
-    console.warn(`Can not switch to step ${step}. ReduxState: ${state.steps}`);
+    console.warn(`Can not switch to step ${value}. ReduxState: ${state.steps}`);
     return state;
   }
 }
 
-function handle_setImage(state: ReduxState, action: Actions.Action): ReduxState {
-  let payload = action.payload as Actions.SetImagePayload;
+function setImage(state: ReduxState, payload: SetImagePayload): ReduxState {
   let imageStateCopy = { ...state.images };
   switch (payload.imageName) {
     case C.AFTER_IMAGE:
@@ -140,25 +163,16 @@ function handle_setImage(state: ReduxState, action: Actions.Action): ReduxState 
       break;
     case C.BEFORE_IMAGE:
       imageStateCopy.before = modifyImageState(imageStateCopy.before, payload.imageData);
-      debug_print_image_size(payload.imageData);
       break;
     default:
       console.warn(`Unknown image name: "${payload.imageName}"`);
       return state;
   }
   // set the image AND go to the next step
-  return handle_completeStep({
+  return completeStep({
     ...state,
     images: imageStateCopy,
   });
-}
-
-function debug_print_image_size(src: string) {
-  var img = document.createElement("img");
-  img.onload = function(event) {
-    console.log(`image dimendion: ${img.naturalWidth}x${img.naturalHeight}`);
-  }
-  img.src = src;
 }
 
 function modifyImageState(oldSubState: ImageState, newData: ImageData) {
@@ -167,5 +181,3 @@ function modifyImageState(oldSubState: ImageState, newData: ImageData) {
     updateCount: oldSubState.updateCount + 1,
   };
 }
-
-export default reducer
