@@ -1,6 +1,7 @@
 $big-screen: "only screen and (min-width: 768px)";
 $medium-screen: "only screen and (min-width: 500px)";
 
+@import "main_menu";
 @import "step_list";
 @import "webcam";
 @import "settings";
@@ -17,6 +18,15 @@ $medium-screen: "only screen and (min-width: 500px)";
     @media #{$big-screen} {
       width: 90%;
       margin: 10px auto;
+    }
+  }
+
+  .screen-instructions,
+  .screen-settings,
+  .screen-privacy {
+    .button {
+      display: block;
+      margin: 20px auto 0px auto;
     }
   }
 
