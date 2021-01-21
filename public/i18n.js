@@ -1,0 +1,5 @@
+const DATA={"page-title":{"en":"Did someone touch this?","de":"Diebstahl Detektor"},"page-nav-source":{"en":"Source code","de":"Quellcode"},"page-nav-projects":{"en":"My other projects","de":"Meine anderen Projekte"}};const DEFAULT_LANG="en";console.debug("Language data:",DATA);const applyLang=(lang)=>{const data=DATA[lang]||{};console.log(`Applying language: ${lang}`);for(const[id,translations]of Object.entries(DATA)){elem=document.getElementById(id);if(elem){let translation="<ERROR>";try{translation=translations[lang]||translations[DEFAULT_LANG]||"<Missing translation>";console.debug(`Translation for "${id}" is "${translation}"`);}catch(e){console.warn(e);}
+elem.innerHTML=translation;if(id==="page-title"){document.title=translation;try{textFit(document.getElementById(id));}catch(error){console.warn("Could not make title auto resizeable");}}}else{console.debug(`Element "${id}" does not exist`);}}}
+const getLang=()=>{const params=new URLSearchParams(window.location.search);return params.get("lang")||DEFAULT_LANG;}
+let old_lang="";const updateLang=()=>{const lang=getLang();if(lang!==old_lang){old_lang=lang;applyLang(lang);}}
+setInterval(updateLang,100);

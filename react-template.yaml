@@ -2,6 +2,12 @@ title: Did someone touch this?
 description: Detect tampering by comparing before and after photos
 menu:
   - title: Source code
-    url: "https://github.com/six-two/react_did_someone_touch_this"
+    url: "https://github.com/six-two/react_contact_form"
+    id: page-nav-source
   - title: My other projects
     url: "https://projects.six-two.dev/"
+    id: page-nav-projects
+pre_build:
+  - template-tools/i18n/i18n.py <PROJECT>
+post_build:
+  - template-tools/minify.py
