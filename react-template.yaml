@@ -8,6 +8,4 @@ menu:
     url: "https://projects.six-two.dev/"
     id: page-nav-projects
 pre_build:
-  - template-tools/i18n/i18n.py <PROJECT>
-post_build:
-  - template-tools/minify.py
+  - template-tools/defaults.py <PROJECT>
